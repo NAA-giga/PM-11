@@ -1,0 +1,198 @@
+﻿<Window x:Class="форма_Посетителя.Views.GroupRequestWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:форма_Посетителя.Views"
+        mc:Ignorable="d"
+        Title="Групповая заявка - ХранительПРО" 
+        Height="650" Width="800"
+        MinHeight="550" MinWidth="700"
+        WindowStartupLocation="CenterScreen">
+
+    <Grid Margin="10">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <!-- Заголовок -->
+        <TextBlock Grid.Row="0" Text="Групповая заявка на посещение" 
+                   FontSize="18" FontWeight="Bold" HorizontalAlignment="Center" Margin="0,0,0,10"/>
+
+        <Separator Grid.Row="1" Margin="0,5" Height="1" Background="Gray"/>
+
+        <!-- Информация для пропуска и принимающая сторона в одной строке -->
+        <Border Grid.Row="2" BorderBrush="LightGray" BorderThickness="1" CornerRadius="5" Margin="0,5" Padding="5">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+
+                <!-- Левая колонка: Информация для пропуска -->
+                <StackPanel Grid.Column="0" Margin="5">
+                    <TextBlock Text="📅 Информация для пропуска" FontWeight="Bold" Margin="0,0,0,5"/>
+                    <Grid Margin="0,2">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="80"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Text="Дата начала:" VerticalAlignment="Center" FontSize="12"/>
+                        <DatePicker Grid.Column="1" SelectedDate="{Binding RequestModel.StartDate}" Height="25" FontSize="12"/>
+                    </Grid>
+                    <Grid Margin="0,2">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="80"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Text="Дата окончания:" VerticalAlignment="Center" FontSize="12"/>
+                        <DatePicker Grid.Column="1" SelectedDate="{Binding RequestModel.EndDate}" Height="25" FontSize="12"/>
+                    </Grid>
+                    <Grid Margin="0,2">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="80"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Text="Цель:" VerticalAlignment="Top" FontSize="12"/>
+                        <TextBox Grid.Column="1" Text="{Binding RequestModel.Purpose, UpdateSourceTrigger=PropertyChanged}" 
+                                 Height="40" TextWrapping="Wrap" AcceptsReturn="True" FontSize="12"/>
+                    </Grid>
+                </StackPanel>
+
+                <!-- Правая колонка: Принимающая сторона -->
+                <StackPanel Grid.Column="1" Margin="5">
+                    <TextBlock Text="👔 Принимающая сторона" FontWeight="Bold" Margin="0,0,0,5"/>
+                    <Grid Margin="0,2">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="80"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Text="Подразделение:" VerticalAlignment="Center" FontSize="12"/>
+                        <ComboBox Grid.Column="1" ItemsSource="{Binding Departments}" 
+                                  SelectedItem="{Binding SelectedDepartment}" Height="25"
+                                  DisplayMemberPath="Name" FontSize="12"/>
+                    </Grid>
+                    <Grid Margin="0,2">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="80"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Text="Сотрудник:" VerticalAlignment="Center" FontSize="12"/>
+                        <ComboBox Grid.Column="1" ItemsSource="{Binding Employees}" 
+                                  SelectedItem="{Binding SelectedEmployee}" Height="25"
+                                  DisplayMemberPath="FullName" FontSize="12"/>
+                    </Grid>
+                </StackPanel>
+            </Grid>
+        </Border>
+
+        <Separator Grid.Row="3" Margin="0,5" Height="1" Background="Gray"/>
+
+        <!-- Загрузка/добавление списка посетителей -->
+        <Border Grid.Row="4" BorderBrush="LightGray" BorderThickness="1" CornerRadius="5" Margin="0,5" Padding="5">
+            <StackPanel>
+                <TextBlock Text="👥 Список посетителей (минимум 5 человек)" FontWeight="Bold" Margin="0,0,0,5"/>
+
+                <!-- Панель инструментов -->
+                <StackPanel Orientation="Horizontal" Margin="0,0,0,5">
+                    <Button Content="📥 Скачать шаблон" Command="{Binding DownloadTemplateCommand}" 
+                            Width="130" Height="28" Margin="0,0,10,0" FontSize="12"/>
+                    <Button Content="📂 Загрузить Excel" Command="{Binding ImportExcelCommand}" 
+                            Width="130" Height="28" Margin="0,0,10,0" FontSize="12"/>
+                    <Button Content="➕ Добавить вручную" Command="{Binding AddVisitorCommand}" 
+                            Width="140" Height="28" Margin="0,0,10,0" FontSize="12"
+                            Background="#3498DB" Foreground="White"/>
+                    <Button Content="🗑 Удалить выбранного" Command="{Binding RemoveVisitorCommand}" 
+                            Width="140" Height="28" Margin="0,0,10,0" FontSize="12"
+                            Background="#E74C3C" Foreground="White"/>
+                    <TextBlock Text="(формат XLSX или вручную)" VerticalAlignment="Center" Foreground="Gray" FontSize="11"/>
+                </StackPanel>
+
+                <!-- Таблица посетителей -->
+                <DataGrid ItemsSource="{Binding Visitors}" 
+                          SelectedItem="{Binding SelectedVisitor}"
+                          AutoGenerateColumns="False" IsReadOnly="False"
+                          Height="200" MaxHeight="200" Margin="0,5" FontSize="11"
+                          RowHeight="30" HeadersVisibility="Column">
+
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Header="№" Binding="{Binding RowNumber}" Width="40" IsReadOnly="True"/>
+                        <DataGridTextColumn Header="Фамилия" Binding="{Binding LastName}" Width="120">
+                            <DataGridTextColumn.EditingElementStyle>
+                                <Style TargetType="TextBox">
+                                    <Setter Property="BorderThickness" Value="1"/>
+                                </Style>
+                            </DataGridTextColumn.EditingElementStyle>
+                        </DataGridTextColumn>
+                        <DataGridTextColumn Header="Имя" Binding="{Binding FirstName}" Width="120"/>
+                        <DataGridTextColumn Header="Отчество" Binding="{Binding MiddleName}" Width="100"/>
+                        <DataGridTextColumn Header="Телефон" Binding="{Binding Phone}" Width="100"/>
+                        <DataGridTextColumn Header="Email" Binding="{Binding Email}" Width="150"/>
+                        <DataGridTextColumn Header="Примечание" Binding="{Binding Note}" Width="150"/>
+                        <DataGridTextColumn Header="Статус" Binding="{Binding HasError}" Width="60" IsReadOnly="True"/>
+                    </DataGrid.Columns>
+                </DataGrid>
+
+                <TextBlock Text="{Binding Visitors.Count, StringFormat='Загружено: {0} чел. (нужно не менее 5)'}" 
+                           HorizontalAlignment="Right" FontSize="11" Margin="0,3">
+                    <TextBlock.Style>
+                        <Style TargetType="TextBlock">
+                            <Setter Property="Foreground" Value="Gray"/>
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding Visitors.Count}" Value="0">
+                                    <Setter Property="Foreground" Value="Red"/>
+                                    <Setter Property="FontWeight" Value="Bold"/>
+                                </DataTrigger>
+                                <DataTrigger Binding="{Binding Visitors.Count}" Value="1">
+                                    <Setter Property="Foreground" Value="Red"/>
+                                </DataTrigger>
+                                <DataTrigger Binding="{Binding Visitors.Count}" Value="2">
+                                    <Setter Property="Foreground" Value="Red"/>
+                                </DataTrigger>
+                                <DataTrigger Binding="{Binding Visitors.Count}" Value="3">
+                                    <Setter Property="Foreground" Value="Red"/>
+                                </DataTrigger>
+                                <DataTrigger Binding="{Binding Visitors.Count}" Value="4">
+                                    <Setter Property="Foreground" Value="Red"/>
+                                </DataTrigger>
+                                <DataTrigger Binding="{Binding Visitors.Count}" Value="5">
+                                    <Setter Property="Foreground" Value="Green"/>
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </TextBlock.Style>
+                </TextBlock>
+            </StackPanel>
+        </Border>
+
+        <Separator Grid.Row="5" Margin="0,5" Height="1" Background="Gray"/>
+
+        <!-- Кнопки действий -->
+        <StackPanel Grid.Row="6" Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,10">
+            <Button Content="📝 Отправить заявку" Command="{Binding SubmitRequestCommand}" 
+                    Width="150" Height="35" Margin="10" FontSize="13"
+                    Background="#2ECC71" Foreground="White" Cursor="Hand"/>
+            <Button Content="👤 Индивидуальная" Command="{Binding SwitchToIndividualCommand}" 
+                    Width="140" Height="35" Margin="10" FontSize="13"
+                    Background="#3498DB" Foreground="White" Cursor="Hand"/>
+            <Button Content="🔙 Назад" Command="{Binding GoToMainCommand}" 
+                    Width="100" Height="35" Margin="10" FontSize="13"
+                    Background="#E74C3C" Foreground="White" Cursor="Hand"/>
+        </StackPanel>
+
+        <!-- Статус и прогресс -->
+        <StackPanel Grid.Row="7">
+            <TextBlock Text="{Binding StatusMessage}" Foreground="Gray" 
+                       HorizontalAlignment="Center" Margin="5" FontSize="11"/>
+            <ProgressBar IsIndeterminate="{Binding IsLoading}" Height="3" Margin="5"/>
+        </StackPanel>
+    </Grid>
+</Window>

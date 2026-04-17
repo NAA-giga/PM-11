@@ -1,0 +1,214 @@
+﻿<Window x:Class="форма_Посетителя.Views.RequestWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:форма_Посетителя.Views"
+        mc:Ignorable="d"
+        Title="Индивидуальная заявка - ХранительПРО" 
+        Height="600" Width="750"
+        MinHeight="500" MinWidth="650"
+        WindowStartupLocation="CenterScreen">
+
+    <Grid Margin="10">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <!-- Заголовок -->
+        <TextBlock Grid.Row="0" Text="Индивидуальная заявка на посещение" 
+                   FontSize="18" FontWeight="Bold" HorizontalAlignment="Center" Margin="0,0,0,10"/>
+
+        <Separator Grid.Row="1" Margin="0,5" Height="1" Background="Gray"/>
+
+        <!-- Информация для пропуска и принимающая сторона в одной строке -->
+        <Border Grid.Row="2" BorderBrush="LightGray" BorderThickness="1" CornerRadius="5" Margin="0,5" Padding="5">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+
+                <!-- Левая колонка: Информация для пропуска -->
+                <StackPanel Grid.Column="0" Margin="5">
+                    <TextBlock Text="📅 Информация для пропуска" FontWeight="Bold" Margin="0,0,0,5"/>
+                    <Grid Margin="0,2">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="80"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Text="Дата начала:" VerticalAlignment="Center" FontSize="12"/>
+                        <DatePicker Grid.Column="1" SelectedDate="{Binding RequestModel.StartDate}" Height="25" FontSize="12"/>
+                    </Grid>
+                    <Grid Margin="0,2">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="80"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Text="Дата окончания:" VerticalAlignment="Center" FontSize="12"/>
+                        <DatePicker Grid.Column="1" SelectedDate="{Binding RequestModel.EndDate}" Height="25" FontSize="12"/>
+                    </Grid>
+                    <Grid Margin="0,2">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="80"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Text="Цель:" VerticalAlignment="Top" FontSize="12"/>
+                        <TextBox Grid.Column="1" Text="{Binding RequestModel.Purpose, UpdateSourceTrigger=PropertyChanged}" 
+                                 Height="40" TextWrapping="Wrap" AcceptsReturn="True" FontSize="12"/>
+                    </Grid>
+                </StackPanel>
+
+                <!-- Правая колонка: Принимающая сторона -->
+                <StackPanel Grid.Column="1" Margin="5">
+                    <TextBlock Text="👔 Принимающая сторона" FontWeight="Bold" Margin="0,0,0,5"/>
+                    <Grid Margin="0,2">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="80"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Text="Подразделение:" VerticalAlignment="Center" FontSize="12"/>
+                        <ComboBox Grid.Column="1" 
+                                  ItemsSource="{Binding Departments}" 
+                                  SelectedItem="{Binding SelectedDepartment}" 
+                                  DisplayMemberPath="Name"
+                                  Height="25" FontSize="12"/>
+                    </Grid>
+                    <Grid Margin="0,2">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="80"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Text="Сотрудник:" VerticalAlignment="Center" FontSize="12"/>
+                        <ComboBox Grid.Column="1" 
+                                  ItemsSource="{Binding Employees}" 
+                                  SelectedItem="{Binding SelectedEmployee}" 
+                                  DisplayMemberPath="FullName"
+                                  Height="25" FontSize="12"/>
+                    </Grid>
+                </StackPanel>
+            </Grid>
+        </Border>
+
+        <Separator Grid.Row="3" Margin="0,5" Height="1" Background="Gray"/>
+
+        <!-- Информация о посетителе (компактно) -->
+        <Border Grid.Row="4" BorderBrush="LightGray" BorderThickness="1" CornerRadius="5" Margin="0,5" Padding="5">
+            <StackPanel>
+                <TextBlock Text="👤 Информация о посетителе" FontWeight="Bold" Margin="0,0,0,5"/>
+
+                <!-- Строка: Фамилия, Имя, Отчество -->
+                <Grid Margin="0,2">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="80"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="80"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="80"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Text="Фамилия:" VerticalAlignment="Center" FontSize="12"/>
+                    <TextBox Grid.Column="1" Text="{Binding RequestModel.LastName}" Height="25" FontSize="12" 
+                             IsReadOnly="True" Background="#F0F0F0"/>
+
+                    <TextBlock Grid.Column="2" Text="Имя:" VerticalAlignment="Center" FontSize="12" Margin="5,0,0,0"/>
+                    <TextBox Grid.Column="3" Text="{Binding RequestModel.FirstName}" Height="25" FontSize="12" 
+                             IsReadOnly="True" Background="#F0F0F0"/>
+
+                    <TextBlock Grid.Column="4" Text="Отчество:" VerticalAlignment="Center" FontSize="12" Margin="5,0,0,0"/>
+                    <TextBox Grid.Column="5" Text="{Binding RequestModel.MiddleName}" Height="25" FontSize="12" 
+                             IsReadOnly="True" Background="#F0F0F0"/>
+                </Grid>
+
+                <!-- Строка: Телефон, Email -->
+                <Grid Margin="0,2">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="80"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="80"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Text="Телефон:" VerticalAlignment="Center" FontSize="12"/>
+                    <TextBox Grid.Column="1" Text="{Binding RequestModel.Phone}" Height="25" FontSize="12" 
+                             IsReadOnly="True" Background="#F0F0F0"/>
+
+                    <TextBlock Grid.Column="2" Text="Email:" VerticalAlignment="Center" FontSize="12" Margin="5,0,0,0"/>
+                    <TextBox Grid.Column="3" Text="{Binding RequestModel.Email}" Height="25" FontSize="12" 
+                             IsReadOnly="True" Background="#F0F0F0"/>
+                </Grid>
+
+                <!-- Строка: Дата рождения, Паспорт -->
+                <Grid Margin="0,2">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="80"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="80"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Text="Дата рожд.:" VerticalAlignment="Center" FontSize="12"/>
+                    <TextBox Grid.Column="1" Text="{Binding RequestModel.BirthDate, StringFormat=dd.MM.yyyy}" Height="25" FontSize="12" 
+                             IsReadOnly="True" Background="#F0F0F0"/>
+
+                    <TextBlock Grid.Column="2" Text="Паспорт:" VerticalAlignment="Center" FontSize="12" Margin="5,0,0,0"/>
+                    <StackPanel Grid.Column="3" Orientation="Horizontal" Height="25">
+                        <TextBox Text="{Binding RequestModel.PassportSeries}" Width="50" FontSize="12" 
+                                 IsReadOnly="True" Background="#F0F0F0" BorderThickness="0"/>
+                        <TextBlock Text=" " VerticalAlignment="Center"/>
+                        <TextBox Text="{Binding RequestModel.PassportNumber}" Width="70" FontSize="12" 
+                                 IsReadOnly="True" Background="#F0F0F0" BorderThickness="0"/>
+                    </StackPanel>
+                </Grid>
+
+                <!-- Строка: Организация -->
+                <Grid Margin="0,2">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="80"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Text="Организация:" VerticalAlignment="Center" FontSize="12"/>
+                    <TextBox Grid.Column="1" Text="{Binding RequestModel.Organization}" Height="25" FontSize="12" 
+                             IsReadOnly="True" Background="#F0F0F0"/>
+                </Grid>
+
+                <!-- Строка: Примечание -->
+                <Grid Margin="0,2">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="80"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Text="Примечание:" VerticalAlignment="Top" FontSize="12"/>
+                    <TextBox Grid.Column="1" Text="{Binding RequestModel.Note}" Height="40" TextWrapping="Wrap" 
+                             AcceptsReturn="True" FontSize="12"/>
+                </Grid>
+            </StackPanel>
+        </Border>
+
+        <Separator Grid.Row="5" Margin="0,5" Height="1" Background="Gray"/>
+
+        <!-- Кнопки действий -->
+        <StackPanel Grid.Row="6" Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,10">
+            <Button Content="📝 Отправить заявку" Command="{Binding SubmitRequestCommand}" 
+                    Width="150" Height="35" Margin="10" FontSize="13"
+                    Background="#2ECC71" Foreground="White" Cursor="Hand"/>
+            <Button Content="👥 Групповая" Command="{Binding SwitchToGroupCommand}" 
+                    Width="140" Height="35" Margin="10" FontSize="13"
+                    Background="#3498DB" Foreground="White" Cursor="Hand"/>
+            <Button Content="🔙 Назад" Command="{Binding GoToMainCommand}" 
+                    Width="100" Height="35" Margin="10" FontSize="13"
+                    Background="#E74C3C" Foreground="White" Cursor="Hand"/>
+        </StackPanel>
+
+        <!-- Статус и прогресс -->
+        <StackPanel Grid.Row="7">
+            <TextBlock Text="{Binding StatusMessage}" Foreground="Gray" 
+                       HorizontalAlignment="Center" Margin="5" FontSize="11"/>
+            <ProgressBar IsIndeterminate="{Binding IsLoading}" Height="3" Margin="5"/>
+        </StackPanel>
+    </Grid>
+</Window>
