@@ -11,6 +11,8 @@
           "CommunityToolkit.Mvvm": "8.4.2",
           "EPPlus": "8.5.3",
           "Microsoft.EntityFrameworkCore.Design": "10.0.6",
+          "Microsoft.Extensions.Configuration.Json": "10.0.6",
+          "Microsoft.Extensions.DependencyInjection": "10.0.6",
           "Npgsql.EntityFrameworkCore.PostgreSQL": "10.0.1"
         },
         "runtime": {

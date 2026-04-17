@@ -1,0 +1,128 @@
+﻿<Window x:Class="форма_сотрудника.Views.RequestDetailsWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:форма_сотрудника.Views"
+        mc:Ignorable="d"
+         Title="Детали заявки - ХранительПРО" 
+        Height="650" Width="750"
+        WindowStartupLocation="CenterOwner"
+        ResizeMode="NoResize">
+
+    <Grid Margin="20">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="150"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+
+        <!-- Заголовок -->
+        <TextBlock Grid.Row="0" Grid.ColumnSpan="2" Text="Детали заявки" 
+                   FontSize="22" FontWeight="Bold" HorizontalAlignment="Center" Margin="0,0,0,20"/>
+
+        <Separator Grid.Row="1" Grid.ColumnSpan="2" Margin="0,10" Height="2" Background="Gray"/>
+
+        <!-- Информация о заявке -->
+        <TextBlock Grid.Row="2" Grid.ColumnSpan="2" Text="Информация о заявке" 
+                   FontSize="16" FontWeight="Bold" Margin="0,10"/>
+
+        <TextBlock Grid.Row="3" Grid.Column="0" Text="Номер заявки:" VerticalAlignment="Center" FontWeight="Bold"/>
+        <TextBlock Grid.Row="3" Grid.Column="1" Text="{Binding Request.Id}" Margin="5" VerticalAlignment="Center"/>
+
+        <TextBlock Grid.Row="4" Grid.Column="0" Text="Тип заявки:" VerticalAlignment="Center" FontWeight="Bold"/>
+        <TextBlock Grid.Row="4" Grid.Column="1" Text="{Binding Request.RequestType}" Margin="5" VerticalAlignment="Center"/>
+
+        <TextBlock Grid.Row="5" Grid.Column="0" Text="Статус:" VerticalAlignment="Center" FontWeight="Bold"/>
+        <TextBlock Grid.Row="5" Grid.Column="1" Margin="5" VerticalAlignment="Center">
+            <TextBlock.Text>
+                <Binding Path="Request.Status"/>
+            </TextBlock.Text>
+            <TextBlock.Style>
+                <Style TargetType="TextBlock">
+                    <Setter Property="Foreground" Value="Black"/>
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding Request.Status}" Value="одобрена">
+                            <Setter Property="Foreground" Value="Green"/>
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding Request.Status}" Value="не одобрена">
+                            <Setter Property="Foreground" Value="Red"/>
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding Request.Status}" Value="проверка">
+                            <Setter Property="Foreground" Value="Orange"/>
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </TextBlock.Style>
+        </TextBlock>
+
+        <TextBlock Grid.Row="6" Grid.Column="0" Text="Дата создания:" VerticalAlignment="Center" FontWeight="Bold"/>
+        <TextBlock Grid.Row="6" Grid.Column="1" Text="{Binding Request.CreationDate, StringFormat='dd.MM.yyyy HH:mm'}" Margin="5" VerticalAlignment="Center"/>
+
+        <TextBlock Grid.Row="7" Grid.Column="0" Text="Дата начала:" VerticalAlignment="Center" FontWeight="Bold"/>
+        <TextBlock Grid.Row="7" Grid.Column="1" Text="{Binding Request.StartDate, StringFormat='dd.MM.yyyy'}" Margin="5" VerticalAlignment="Center"/>
+
+        <TextBlock Grid.Row="8" Grid.Column="0" Text="Дата окончания:" VerticalAlignment="Center" FontWeight="Bold"/>
+        <TextBlock Grid.Row="8" Grid.Column="1" Text="{Binding Request.EndDate, StringFormat='dd.MM.yyyy'}" Margin="5" VerticalAlignment="Center"/>
+
+        <TextBlock Grid.Row="9" Grid.Column="0" Text="Цель посещения:" VerticalAlignment="Top" FontWeight="Bold"/>
+        <TextBlock Grid.Row="9" Grid.Column="1" Text="{Binding Request.Purpose}" Margin="5" TextWrapping="Wrap"/>
+
+        <TextBlock Grid.Row="10" Grid.Column="0" Text="Причина отказа:" VerticalAlignment="Top" FontWeight="Bold"/>
+        <TextBlock Grid.Row="10" Grid.Column="1" Text="{Binding Request.RejectionReason}" Margin="5" TextWrapping="Wrap" Foreground="Red"/>
+
+        <Separator Grid.Row="11" Grid.ColumnSpan="2" Margin="0,10" Height="2" Background="Gray"/>
+
+        <!-- Информация о посетителе -->
+        <TextBlock Grid.Row="12" Grid.ColumnSpan="2" Text="Информация о посетителе" 
+                   FontSize="16" FontWeight="Bold" Margin="0,10"/>
+
+        <TextBlock Grid.Row="13" Grid.Column="0" Text="Фамилия:" VerticalAlignment="Center" FontWeight="Bold"/>
+        <TextBlock Grid.Row="13" Grid.Column="1" Text="{Binding Request.Visitor.LastName}" Margin="5" VerticalAlignment="Center"/>
+
+        <TextBlock Grid.Row="14" Grid.Column="0" Text="Имя:" VerticalAlignment="Center" FontWeight="Bold"/>
+        <TextBlock Grid.Row="14" Grid.Column="1" Text="{Binding Request.Visitor.FirstName}" Margin="5" VerticalAlignment="Center"/>
+
+        <TextBlock Grid.Row="15" Grid.Column="0" Text="Отчество:" VerticalAlignment="Center" FontWeight="Bold"/>
+        <TextBlock Grid.Row="15" Grid.Column="1" Text="{Binding Request.Visitor.MiddleName}" Margin="5" VerticalAlignment="Center"/>
+
+        <TextBlock Grid.Row="16" Grid.Column="0" Text="Телефон:" VerticalAlignment="Center" FontWeight="Bold"/>
+        <TextBlock Grid.Row="16" Grid.Column="1" Text="{Binding Request.Visitor.Phone}" Margin="5" VerticalAlignment="Center"/>
+
+        <TextBlock Grid.Row="17" Grid.Column="0" Text="Email:" VerticalAlignment="Center" FontWeight="Bold"/>
+        <TextBlock Grid.Row="17" Grid.Column="1" Text="{Binding Request.Visitor.Email}" Margin="5" VerticalAlignment="Center"/>
+
+        <TextBlock Grid.Row="18" Grid.Column="0" Text="Организация:" VerticalAlignment="Center" FontWeight="Bold"/>
+        <TextBlock Grid.Row="18" Grid.Column="1" Text="{Binding Request.Visitor.Organization}" Margin="5" VerticalAlignment="Center"/>
+
+        <!-- Кнопка закрытия -->
+        <StackPanel Grid.Row="19" Grid.ColumnSpan="2" Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,20">
+            <Button Content="🔙 Закрыть" Command="{Binding CloseCommand}" 
+                    Width="120" Height="35" Margin="10" FontSize="13"
+                    Background="#3498DB" Foreground="White" Cursor="Hand"/>
+        </StackPanel>
+
+        <!-- Статус и прогресс -->
+        <StackPanel Grid.Row="13" Grid.ColumnSpan="2" Margin="0,20,0,0">
+            <TextBlock Text="{Binding StatusMessage}" Foreground="Gray" 
+                       HorizontalAlignment="Center" Margin="5" FontSize="11"/>
+            <ProgressBar IsIndeterminate="{Binding IsLoading}" Height="3" Margin="5"/>
+        </StackPanel>
+    </Grid>
+</Window>

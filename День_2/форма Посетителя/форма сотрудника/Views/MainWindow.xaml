@@ -1,0 +1,67 @@
+﻿<Window x:Class="форма_сотрудника.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:форма_сотрудника"
+        mc:Ignorable="d"
+        Title="Терминал сотрудника - ХранительПРО" 
+        Height="500" Width="600"
+        WindowStartupLocation="CenterScreen"
+        ResizeMode="NoResize">
+
+    <Grid Margin="20">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <!-- Заголовок -->
+        <TextBlock Grid.Row="0" Text="ХранительПРО - Терминал сотрудника" 
+                   FontSize="20" FontWeight="Bold" HorizontalAlignment="Center" 
+                   Foreground="#2C3E50" Margin="0,0,0,30"/>
+
+        <Separator Grid.Row="1" Margin="0,0,0,20" Height="1" Background="Gray"/>
+
+        <!-- Кнопки меню -->
+        <StackPanel Grid.Row="2" Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center">
+
+            <Button Content="🏢 Заявки моего отдела" 
+                    Command="{Binding DepartmentRequestsCommand}" 
+                    Width="280" Height="45" Margin="10" FontSize="14"
+                    Background="#2ECC71" Foreground="White" Cursor="Hand"
+                    BorderThickness="0">
+                <Button.Style>
+                    <Style TargetType="Button">
+                        <Setter Property="Background" Value="#2ECC71"/>
+                        <Style.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Background" Value="#27AE60"/>
+                            </Trigger>
+                        </Style.Triggers>
+                    </Style>
+                </Button.Style>
+            </Button>
+
+            <Separator Margin="0,15,0,15" Height="1" Background="LightGray"/>
+
+            <Button Content="🚪 Выход" 
+                    Command="{Binding LogoutCommand}" 
+                    Width="280" Height="45" Margin="10" FontSize="14"
+                    Background="#E74C3C" Foreground="White" Cursor="Hand"
+                    BorderThickness="0">
+                <Button.Style>
+                    <Style TargetType="Button">
+                        <Setter Property="Background" Value="#E74C3C"/>
+                        <Style.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Background" Value="#C0392B"/>
+                            </Trigger>
+                        </Style.Triggers>
+                    </Style>
+                </Button.Style>
+            </Button>
+        </StackPanel>
+    </Grid>
+</Window>
