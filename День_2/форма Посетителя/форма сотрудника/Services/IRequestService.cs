@@ -12,5 +12,7 @@ namespace форма_сотрудника.Services
         Task<Заявка> GetRequestDetails(int requestId);
         Task<(bool Success, string Message)> ApproveRequest(int requestId, int employeeId);
         Task<(bool Success, string Message)> RejectRequest(int requestId, int employeeId, string reason);
+        Task<List<Заявка>> GetAllPendingRequests();
+        Task<List<DepartmentItem>> GetDepartments();
     }
 }

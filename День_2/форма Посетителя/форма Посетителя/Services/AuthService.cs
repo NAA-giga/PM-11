@@ -19,34 +19,23 @@ namespace форма_Посетителя.Services
         }
 
         /// <summary>
-        /// Авторизация через Entity Framework Core по логину и паролю
+        /// Авторизация через Entity Framework Core по email и паролю
         /// </summary>
-        public async Task<(bool Success, string Message, Посетитель? Visitor)> LoginWithEF(string login, string password)
+        public async Task<(bool Success, string Message, Посетитель? Visitor)> LoginWithEF(string email, string password)
         {
             try
             {
-                // Хешируем введённый пароль для сравнения с хешем в БД
                 string hashedPassword = PasswordHasher.HashPasswordMD5(password);
 
-                // Ищем посетителя по логину и хешу пароля
                 var visitor = await _context.Посетительs
-                    .FirstOrDefaultAsync(v => v.Логин == login && v.Пароль == hashedPassword);
+                    .FirstOrDefaultAsync(v => v.Email == email && v.Пароль == hashedPassword);
 
                 if (visitor != null)
                 {
                     return (true, "Вход выполнен успешно!", visitor);
                 }
 
-                // Если не нашли по логину, пробуем найти по email
-                var visitorByEmail = await _context.Посетительs
-                    .FirstOrDefaultAsync(v => v.Email == login && v.Пароль == hashedPassword);
-
-                if (visitorByEmail != null)
-                {
-                    return (true, "Вход выполнен успешно!", visitorByEmail);
-                }
-
-                return (false, "Неверный логин или пароль!", null);
+                return (false, "Неверный email или пароль!", null);
             }
             catch (System.Exception ex)
             {

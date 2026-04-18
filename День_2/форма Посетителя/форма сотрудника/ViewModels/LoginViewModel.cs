@@ -11,16 +11,15 @@ namespace форма_сотрудника.ViewModels
     public class LoginViewModel : BaseViewModel
     {
         private readonly IAuthService _authService;
-        private readonly RelayCommand _loginCommand;
 
-        private string _loginText = string.Empty;
-        public string LoginText
+        private string _employeeCode = string.Empty;
+        public string EmployeeCode
         {
-            get => _loginText;
+            get => _employeeCode;
             set
             {
-                SetProperty(ref _loginText, value);
-                _loginCommand.RaiseCanExecuteChanged();
+                SetProperty(ref _employeeCode, value);
+                (LoginCommand as RelayCommand)?.RaiseCanExecuteChanged();
             }
         }
 
@@ -31,7 +30,7 @@ namespace форма_сотрудника.ViewModels
             set
             {
                 SetProperty(ref _password, value);
-                _loginCommand.RaiseCanExecuteChanged();
+                (LoginCommand as RelayCommand)?.RaiseCanExecuteChanged();
             }
         }
 
@@ -46,33 +45,41 @@ namespace форма_сотрудника.ViewModels
         public bool IsLoading
         {
             get => _isLoading;
-            set => SetProperty(ref _isLoading, value);
+            set
+            {
+                SetProperty(ref _isLoading, value);
+                (LoginCommand as RelayCommand)?.RaiseCanExecuteChanged();
+            }
         }
 
-        public ICommand LoginCommand => _loginCommand;
+        public ICommand LoginCommand { get; }
 
         public LoginViewModel(IAuthService authService)
         {
             _authService = authService;
-            _loginCommand = new RelayCommand(async _ => await Login(), _ => CanLogin());
+            LoginCommand = new RelayCommand(_ => LoginAsync(), _ => CanLogin());
         }
 
         private bool CanLogin()
         {
             return !IsLoading &&
-                   !string.IsNullOrWhiteSpace(LoginText) &&
+                   !string.IsNullOrWhiteSpace(EmployeeCode) &&
                    !string.IsNullOrWhiteSpace(Password);
+        }
+
+        private async void LoginAsync()
+        {
+            await Login();
         }
 
         private async Task Login()
         {
             IsLoading = true;
             StatusMessage = "Выполняется вход...";
-            _loginCommand.RaiseCanExecuteChanged();
 
             try
             {
-                var result = await _authService.Login(LoginText, Password);
+                var result = await _authService.LoginByCode(EmployeeCode, Password);
 
                 if (result.Success && result.Employee != null)
                 {
@@ -85,7 +92,7 @@ namespace форма_сотрудника.ViewModels
                 }
                 else
                 {
-                    StatusMessage = "Неверный логин или пароль!";
+                    StatusMessage = "Неверный код сотрудника или пароль!";
                 }
             }
             catch (System.Exception ex)
@@ -95,7 +102,6 @@ namespace форма_сотрудника.ViewModels
             finally
             {
                 IsLoading = false;
-                _loginCommand.RaiseCanExecuteChanged();
             }
         }
     }

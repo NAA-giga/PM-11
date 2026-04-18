@@ -39,10 +39,11 @@ namespace форма_сотрудника
                 var services = new ServiceCollection();
 
                 services.AddDbContext<ApplicationDbContext>(options =>
-                    options.UseNpgsql(connectionString), ServiceLifetime.Scoped);
+                    options.UseNpgsql(connectionString), ServiceLifetime.Transient);
 
                 services.AddScoped<IAuthService, AuthService>();
                 services.AddScoped<IRequestService, RequestService>();
+                services.AddScoped<IBlackListService, BlackListService>();
 
                 services.AddTransient<LoginViewModel>();
                 services.AddTransient<MainViewModel>();

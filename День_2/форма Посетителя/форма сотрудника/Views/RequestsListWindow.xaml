@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:форма_сотрудника.Views"
         mc:Ignorable="d"
            Title="Список заявок - ХранительПРО" 
-        Height="550" Width="950"
+        Height="700" Width="1100"
         WindowStartupLocation="CenterScreen">
 
     <Grid Margin="10">
@@ -19,27 +19,72 @@
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
 
-        <TextBlock Grid.Row="0" Text="Список заявок отдела" 
+        <!-- Заголовок -->
+        <TextBlock Grid.Row="0" Text="Заявки на посещение (формальная проверка)" 
                    FontSize="18" FontWeight="Bold" HorizontalAlignment="Center" Margin="0,0,0,10"/>
 
         <!-- Панель фильтров -->
-        <StackPanel Grid.Row="1" Orientation="Horizontal" Margin="0,0,0,10">
-            <TextBlock Text="Фильтр по статусу:" VerticalAlignment="Center" Margin="0,0,10,0" FontSize="12"/>
-            <ComboBox ItemsSource="{Binding StatusFilters}" 
-                      SelectedItem="{Binding FilterStatus}" 
-                      Width="120" Height="25" Margin="0,0,10,0" FontSize="12"/>
-            <Button Content="🔄 Обновить" Command="{Binding RefreshCommand}" 
-                    Width="80" Height="25" Margin="0,0,10,0" FontSize="12"/>
-        </StackPanel>
+        <Border Grid.Row="1" BorderBrush="LightGray" BorderThickness="1" CornerRadius="5" Padding="10" Margin="0,0,0,10">
+            <StackPanel>
+                <TextBlock Text="Фильтры" FontWeight="Bold" Margin="0,0,0,10"/>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+
+                    <!-- Тип заявки -->
+                    <TextBlock Grid.Row="0" Grid.Column="0" Text="Тип:" VerticalAlignment="Center" Margin="0,0,10,0"/>
+                    <ComboBox Grid.Row="0" Grid.Column="1" 
+                              ItemsSource="{Binding RequestTypes}" 
+                              SelectedItem="{Binding FilterRequestType}"
+                              Width="120" Height="25" Margin="0,0,20,0"/>
+
+                    <!-- Подразделение -->
+                    <TextBlock Grid.Row="0" Grid.Column="2" Text="Подразделение:" VerticalAlignment="Center" Margin="0,0,10,0"/>
+                    <ComboBox Grid.Row="0" Grid.Column="3" 
+                              ItemsSource="{Binding Departments}" 
+                              SelectedItem="{Binding FilterDepartment}"
+                              DisplayMemberPath="Name"
+                              Width="180" Height="25" Margin="0,0,20,0"/>
+
+                    <!-- Статус -->
+                    <TextBlock Grid.Row="0" Grid.Column="4" Text="Статус:" VerticalAlignment="Center" Margin="0,0,10,0"/>
+                    <ComboBox Grid.Row="0" Grid.Column="5" 
+                              ItemsSource="{Binding StatusFilters}" 
+                              SelectedItem="{Binding FilterStatus}"
+                              Width="120" Height="25"/>
+
+                    <!-- Кнопки -->
+                    <StackPanel Grid.Row="1" Grid.ColumnSpan="6" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,10,0,0">
+                        <Button Content="Применить фильтры" Command="{Binding ApplyFiltersCommand}" 
+                                Width="120" Height="30" Margin="0,0,10,0" Background="#3498DB" Foreground="White"/>
+                        <Button Content="Сбросить фильтры" Command="{Binding ResetFiltersCommand}" 
+                                Width="120" Height="30" Margin="0,0,10,0" Background="#95A5A6" Foreground="White"/>
+                        <Button Content="🔄 Обновить" Command="{Binding RefreshCommand}" 
+                                Width="80" Height="30" Background="#2ECC71" Foreground="White"/>
+                    </StackPanel>
+                </Grid>
+            </StackPanel>
+        </Border>
 
         <!-- Таблица заявок -->
         <DataGrid Grid.Row="2" ItemsSource="{Binding Requests}" 
-                  SelectedItem="{Binding SelectedRequest}"
+                  SelectedItem="{Binding SelectedRequest, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                   AutoGenerateColumns="False" 
                   IsReadOnly="True"
                   SelectionMode="Single"
+                  SelectionUnit="FullRow"
                   Margin="0,5"
-                  RowHeight="35"
+                  RowHeight="40"
                   FontSize="12">
 
             <DataGrid.Columns>
@@ -51,22 +96,21 @@
                 <DataGridTextColumn Header="Дата окончания" Binding="{Binding EndDate, StringFormat='dd.MM.yyyy'}" Width="100"/>
                 <DataGridTextColumn Header="Подразделение" Binding="{Binding Department.Name}" Width="150"/>
                 <DataGridTextColumn Header="Посетитель" Binding="{Binding Visitor.LastName}" Width="120"/>
+                <DataGridTextColumn Header="Email" Binding="{Binding Visitor.Email}" Width="150"/>
                 <DataGridTextColumn Header="Статус" Binding="{Binding Status}" Width="100">
                     <DataGridTextColumn.ElementStyle>
                         <Style TargetType="TextBlock">
                             <Setter Property="Foreground" Value="Black"/>
+                            <Setter Property="FontWeight" Value="Bold"/>
                             <Style.Triggers>
                                 <DataTrigger Binding="{Binding Status}" Value="одобрена">
                                     <Setter Property="Foreground" Value="Green"/>
-                                    <Setter Property="FontWeight" Value="Bold"/>
                                 </DataTrigger>
                                 <DataTrigger Binding="{Binding Status}" Value="не одобрена">
                                     <Setter Property="Foreground" Value="Red"/>
-                                    <Setter Property="FontWeight" Value="Bold"/>
                                 </DataTrigger>
                                 <DataTrigger Binding="{Binding Status}" Value="проверка">
                                     <Setter Property="Foreground" Value="Orange"/>
-                                    <Setter Property="FontWeight" Value="Bold"/>
                                 </DataTrigger>
                             </Style.Triggers>
                         </Style>
@@ -75,25 +119,21 @@
             </DataGrid.Columns>
         </DataGrid>
 
+        <!-- Статус загрузки -->
         <TextBlock Grid.Row="3" Text="{Binding StatusMessage}" 
                    Foreground="Gray" HorizontalAlignment="Center" Margin="5" FontSize="11"/>
 
         <!-- Кнопки действий -->
         <StackPanel Grid.Row="4" Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,10">
-            <Button Content="🔍 Детали" Command="{Binding ViewDetailsCommand}" 
-                    Width="120" Height="35" Margin="10" FontSize="13"
+            <Button Content="🔍 Проверить заявку" Command="{Binding ReviewRequestCommand}" 
+                    Width="150" Height="40" Margin="10" FontSize="13"
                     Background="#3498DB" Foreground="White" Cursor="Hand"/>
-            <Button Content="✅ Одобрить" Command="{Binding ApproveRequestCommand}" 
-                    Width="120" Height="35" Margin="10" FontSize="13"
-                    Background="#2ECC71" Foreground="White" Cursor="Hand"/>
-            <Button Content="❌ Отказать" Command="{Binding RejectRequestCommand}" 
-                    Width="120" Height="35" Margin="10" FontSize="13"
-                    Background="#E74C3C" Foreground="White" Cursor="Hand"/>
             <Button Content="🔙 Назад" Command="{Binding GoToMainCommand}" 
-                    Width="100" Height="35" Margin="10" FontSize="13"
+                    Width="100" Height="40" Margin="10" FontSize="13"
                     Background="#95A5A6" Foreground="White" Cursor="Hand"/>
         </StackPanel>
 
+        <!-- Индикатор загрузки -->
         <ProgressBar Grid.Row="5" IsIndeterminate="{Binding IsLoading}" Height="3" Margin="5"/>
     </Grid>
 </Window>

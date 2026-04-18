@@ -21,8 +21,6 @@ namespace форма_сотрудника.Views
     /// </summary>
     public partial class LoginWindow : Window
     {
-        private readonly LoginViewModel _viewModel;
-
         public LoginWindow()
         {
             InitializeComponent();
@@ -35,13 +33,13 @@ namespace форма_сотрудника.Views
                 return;
             }
 
-            _viewModel = new LoginViewModel(authService);
-            DataContext = _viewModel;
+            var viewModel = new LoginViewModel(authService);
+            DataContext = viewModel;
 
-            // Обновляем пароль при его изменении
-            PasswordBox.PasswordChanged += (s, e) =>
+            // Передаём пароль из PasswordBox в ViewModel
+            PasswordBox.PasswordChanged += (sender, e) =>
             {
-                _viewModel.Password = PasswordBox.Password;
+                viewModel.Password = PasswordBox.Password;
             };
         }
     }

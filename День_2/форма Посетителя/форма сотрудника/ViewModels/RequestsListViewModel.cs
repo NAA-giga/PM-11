@@ -13,26 +13,25 @@ namespace форма_сотрудника.ViewModels
     public class RequestsListViewModel : BaseViewModel
     {
         private readonly IRequestService _requestService;
-        private readonly bool _isMyRequests;
+        private List<Заявка> _allRequests = new List<Заявка>();
 
-        private ObservableCollection<Заявка> _requests;
+        private ObservableCollection<Заявка> _requests = new ObservableCollection<Заявка>();
         public ObservableCollection<Заявка> Requests
         {
             get => _requests;
             set => SetProperty(ref _requests, value);
         }
 
-        private Заявка _selectedRequest;
-        public Заявка SelectedRequest
+        private Заявка? _selectedRequest;
+        public Заявка? SelectedRequest
         {
             get => _selectedRequest;
             set
             {
                 SetProperty(ref _selectedRequest, value);
-                // Обновляем состояние кнопок при выборе заявки
-                (ViewDetailsCommand as RelayCommand)?.RaiseCanExecuteChanged();
-                (ApproveRequestCommand as RelayCommand)?.RaiseCanExecuteChanged();
-                (RejectRequestCommand as RelayCommand)?.RaiseCanExecuteChanged();
+                // Обновляем состояние кнопки при выборе заявки
+                System.Diagnostics.Debug.WriteLine($"SelectedRequest changed: {value?.Id} - {value?.Name}");
+                (ReviewRequestCommand as RelayCommand)?.RaiseCanExecuteChanged();
             }
         }
 
@@ -50,60 +49,76 @@ namespace форма_сотрудника.ViewModels
             set => SetProperty(ref _isLoading, value);
         }
 
+        // Фильтры
+        private string _filterRequestType = "Все";
+        public string FilterRequestType
+        {
+            get => _filterRequestType;
+            set => SetProperty(ref _filterRequestType, value);
+        }
+
+        private DepartmentItem? _filterDepartment;
+        public DepartmentItem? FilterDepartment
+        {
+            get => _filterDepartment;
+            set => SetProperty(ref _filterDepartment, value);
+        }
+
         private string _filterStatus = "Все";
         public string FilterStatus
         {
             get => _filterStatus;
-            set
-            {
-                if (SetProperty(ref _filterStatus, value))
-                {
-                    _ = LoadRequests();
-                }
-            }
+            set => SetProperty(ref _filterStatus, value);
         }
 
+        public ObservableCollection<string> RequestTypes { get; set; }
         public ObservableCollection<string> StatusFilters { get; set; }
+        public ObservableCollection<DepartmentItem> Departments { get; set; }
 
-        public ICommand ViewDetailsCommand { get; }
+        public ICommand ReviewRequestCommand { get; }
         public ICommand RefreshCommand { get; }
+        public ICommand ApplyFiltersCommand { get; }
+        public ICommand ResetFiltersCommand { get; }
         public ICommand GoToMainCommand { get; }
-        public ICommand ApproveRequestCommand { get; }
-        public ICommand RejectRequestCommand { get; }
 
-        public RequestsListViewModel(IRequestService requestService, bool isMyRequests)
+        public RequestsListViewModel(IRequestService requestService)
         {
             _requestService = requestService;
-            _isMyRequests = isMyRequests;
 
             Requests = new ObservableCollection<Заявка>();
+            Departments = new ObservableCollection<DepartmentItem>();
 
-            StatusFilters = new ObservableCollection<string>
-            {
-                "Все",
-                "проверка",
-                "одобрена",
-                "не одобрена"
-            };
+            RequestTypes = new ObservableCollection<string> { "Все", "личная", "групповая" };
+            StatusFilters = new ObservableCollection<string> { "Все", "проверка", "одобрена", "не одобрена" };
 
-            // Кнопка "Детали" активна при выборе заявки
-            ViewDetailsCommand = new RelayCommand(_ => ViewDetails(), _ => SelectedRequest != null);
+            ReviewRequestCommand = new RelayCommand(_ => ReviewRequest(), _ => true);
             RefreshCommand = new RelayCommand(async _ => await LoadRequests());
+            ApplyFiltersCommand = new RelayCommand(_ => ApplyFilters());
+            ResetFiltersCommand = new RelayCommand(_ => ResetFilters());
             GoToMainCommand = new RelayCommand(_ => GoToMain());
-            ApproveRequestCommand = new RelayCommand(async _ => await ApproveRequest(), _ => CanApprove());
-            RejectRequestCommand = new RelayCommand(async _ => await RejectRequest(), _ => CanReject());
 
-            _ = LoadRequests();
+            LoadDepartments();
+            LoadRequests();
         }
 
-        private bool CanApprove()
+        private async void LoadDepartments()
         {
-            return SelectedRequest != null && SelectedRequest.Status == "проверка";
-        }
-
-        private bool CanReject()
-        {
-            return SelectedRequest != null && SelectedRequest.Status == "проверка";
+            try
+            {
+                var depts = await _requestService.GetDepartments();
+                Departments.Clear();
+                Departments.Add(new DepartmentItem { Id = 0, Name = "Все" });
+                foreach (var dept in depts)
+                {
+                    Departments.Add(dept);
+                }
+                FilterDepartment = Departments.FirstOrDefault();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Ошибка загрузки подразделений: {ex.Message}", "Ошибка",
+                    MessageBoxButton.OK, MessageBoxImage.Error);
+            }
         }
 
         public async Task LoadRequests()
@@ -113,41 +128,20 @@ namespace форма_сотрудника.ViewModels
 
             try
             {
-                if (App.CurrentEmployee == null)
-                {
-                    StatusMessage = "Сотрудник не авторизован";
-                    return;
-                }
+                _allRequests = await _requestService.GetAllPendingRequests();
 
-                System.Collections.Generic.List<Заявка> allRequests;
+                System.Diagnostics.Debug.WriteLine($"Загружено заявок: {_allRequests.Count}");
 
-                if (_isMyRequests)
-                {
-                    allRequests = await _requestService.GetRequestsByEmployee(App.CurrentEmployee.Id);
-                }
-                else
-                {
-                    int departmentId = App.CurrentEmployee.DepartmentId ?? 0;
-                    allRequests = await _requestService.GetRequestsByDepartment(departmentId);
-                }
+                ApplyFilters();
 
-                Requests.Clear();
-
-                foreach (var request in allRequests)
-                {
-                    if (FilterStatus == "Все" || request.Status == FilterStatus)
-                    {
-                        Requests.Add(request);
-                    }
-                }
+                System.Diagnostics.Debug.WriteLine($"После фильтра: {Requests.Count}");
 
                 StatusMessage = $"Найдено заявок: {Requests.Count}";
             }
             catch (Exception ex)
             {
                 StatusMessage = $"Ошибка загрузки: {ex.Message}";
-                MessageBox.Show($"Ошибка загрузки заявок: {ex.Message}", "Ошибка",
-                    MessageBoxButton.OK, MessageBoxImage.Error);
+                System.Diagnostics.Debug.WriteLine($"Ошибка: {ex.Message}");
             }
             finally
             {
@@ -155,81 +149,52 @@ namespace форма_сотрудника.ViewModels
             }
         }
 
-        private void ViewDetails()
+        private void ApplyFilters()
+        {
+            var filtered = _allRequests.AsEnumerable();
+
+            if (FilterRequestType != "Все")
+            {
+                filtered = filtered.Where(r => r.RequestType == FilterRequestType);
+            }
+
+            if (FilterDepartment != null && FilterDepartment.Id > 0)
+            {
+                filtered = filtered.Where(r => r.DepartmentId == FilterDepartment.Id);
+            }
+
+            if (FilterStatus != "Все")
+            {
+                filtered = filtered.Where(r => r.Status == FilterStatus);
+            }
+
+            Requests.Clear();
+            foreach (var request in filtered)
+            {
+                Requests.Add(request);
+            }
+        }
+
+        private void ResetFilters()
+        {
+            FilterRequestType = "Все";
+            FilterDepartment = Departments.FirstOrDefault(d => d.Name == "Все");
+            FilterStatus = "Все";
+            ApplyFilters();
+        }
+
+        private void ReviewRequest()
         {
             if (SelectedRequest != null)
             {
-                var detailsWindow = new RequestDetailsWindow(SelectedRequest.Id);
-                detailsWindow.ShowDialog();
-                _ = LoadRequests();
+                var reviewWindow = new RequestReviewWindow(SelectedRequest.Id);
+                reviewWindow.ShowDialog();
+                LoadRequests();
             }
-        }
-
-        private async Task ApproveRequest()
-        {
-            if (SelectedRequest == null) return;
-
-            var result = MessageBox.Show($"Одобрить заявку #{SelectedRequest.Id} от {SelectedRequest.Visitor?.LastName}?",
-                "Подтверждение", MessageBoxButton.YesNo, MessageBoxImage.Question);
-
-            if (result == MessageBoxResult.Yes)
+            else
             {
-                IsLoading = true;
-                try
-                {
-                    var response = await _requestService.ApproveRequest(SelectedRequest.Id, App.CurrentEmployee.Id);
-
-                    if (response.Success)
-                    {
-                        MessageBox.Show(response.Message, "Успех", MessageBoxButton.OK, MessageBoxImage.Information);
-                        await LoadRequests();
-                    }
-                    else
-                    {
-                        MessageBox.Show(response.Message, "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
-                    }
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show($"Ошибка: {ex.Message}", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
-                }
-                finally
-                {
-                    IsLoading = false;
-                }
-            }
-        }
-
-        private async Task RejectRequest()
-        {
-            if (SelectedRequest == null) return;
-
-            var reasonDialog = new InputDialog("Введите причину отказа:", "Отказ в заявке");
-            if (reasonDialog.ShowDialog() == true && !string.IsNullOrWhiteSpace(reasonDialog.Answer))
-            {
-                IsLoading = true;
-                try
-                {
-                    var response = await _requestService.RejectRequest(SelectedRequest.Id, App.CurrentEmployee.Id, reasonDialog.Answer);
-
-                    if (response.Success)
-                    {
-                        MessageBox.Show(response.Message, "Успех", MessageBoxButton.OK, MessageBoxImage.Information);
-                        await LoadRequests();
-                    }
-                    else
-                    {
-                        MessageBox.Show(response.Message, "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
-                    }
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show($"Ошибка: {ex.Message}", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
-                }
-                finally
-                {
-                    IsLoading = false;
-                }
+                MessageBox.Show("Пожалуйста, выберите заявку для проверки.", "Внимание",
+                    MessageBoxButton.OK, MessageBoxImage.Warning);
             }
         }
 

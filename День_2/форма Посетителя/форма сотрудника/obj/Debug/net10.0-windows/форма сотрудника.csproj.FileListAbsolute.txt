@@ -117,3 +117,5 @@ C:\23П-2\ПМ-11\день 2\форма Посетителя\форма сотр
 C:\23П-2\ПМ-11\день 2\форма Посетителя\форма сотрудника\obj\Debug\net10.0-windows\_____ __.33C36F6B.Up2Date
 C:\23П-2\ПМ-11\день 2\форма Посетителя\форма сотрудника\obj\Debug\net10.0-windows\GeneratedInternalTypeHelper.g.cs
 C:\23П-2\ПМ-11\день 2\форма Посетителя\форма сотрудника\obj\Debug\net10.0-windows\App.baml
+C:\23П-2\ПМ-11\день 2\форма Посетителя\форма сотрудника\obj\Debug\net10.0-windows\Views\RequestReviewWindow.g.cs
+C:\23П-2\ПМ-11\день 2\форма Посетителя\форма сотрудника\obj\Debug\net10.0-windows\Views\RequestReviewWindow.baml

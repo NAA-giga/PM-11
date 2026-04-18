@@ -12,6 +12,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using форма_Посетителя.Services;
 using форма_Посетителя.ViewModels;
+using форма_Посетителя.Helpers;
 
 namespace форма_Посетителя.Views
 {
@@ -20,24 +21,28 @@ namespace форма_Посетителя.Views
     /// </summary>
     public partial class LoginWindow : Window
     {
-        private readonly LoginViewModel _viewModel;
+        private LoginViewModel _viewModel;
 
         public LoginWindow()
         {
             InitializeComponent();
 
-            var authService = App.ServiceProvider.GetRequiredService<IAuthService>();
+            var authService = App.ServiceProvider?.GetRequiredService<IAuthService>();
+            if (authService == null)
+            {
+                MessageBox.Show("Ошибка инициализации сервисов", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+                Close();
+                return;
+            }
+
             _viewModel = new LoginViewModel(authService);
-
             DataContext = _viewModel;
-        }
 
-        private void PasswordBox_PasswordChanged(object sender, RoutedEventArgs e)
-        {
-            if (_viewModel != null)
+            // Обновляем пароль при его изменении
+            PasswordBox.PasswordChanged += (s, e) =>
             {
                 _viewModel.Password = PasswordBox.Password;
-            }
+            };
         }
     }
 }

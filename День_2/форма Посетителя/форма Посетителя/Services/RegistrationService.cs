@@ -1,8 +1,10 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
+using Npgsql;
+using System;
 using System.Data;
 using System.Threading.Tasks;
-using Microsoft.EntityFrameworkCore;
-using Npgsql;
+using System.Windows;
+using System.IO;
 using форма_Посетителя.Helpers;
 using форма_Посетителя.Models;
 
@@ -163,33 +165,87 @@ namespace форма_Посетителя.Services
         {
             try
             {
+                // Проверка, существует ли пользователь с таким email
+                var existingVisitor = await _context.Посетительs
+                    .FirstOrDefaultAsync(v => v.Email == model.Email);
+
+                if (existingVisitor != null)
+                {
+                    return (false, "Пользователь с таким email уже существует!", 0);
+                }
+
                 string hashedPassword = PasswordHasher.HashPasswordMD5(model.Password);
 
+                // Создаём посетителя (Логин сгенерируется автоматически триггером)
                 var visitor = new Посетитель
                 {
                     Фамилия = model.LastName,
                     Имя = model.FirstName,
-                    Отчество = model.MiddleName,
-                    Телефон = model.Phone,
+                    Отчество = model.MiddleName ?? "",
+                    Телефон = model.Phone ?? "",
                     Email = model.Email,
                     ДатаРождения = DateOnly.FromDateTime(model.BirthDate),
-                    Примечание = model.Note,
+                    Примечание = model.Note ?? "",
                     СерияПаспорта = model.PassportSeries,
                     НомерПаспорта = model.PassportNumber,
-                    Организация = model.Organization,
-                    Пароль = hashedPassword,
-                    Логин = model.Email
+                    Организация = model.Organization ?? "",
+                    Пароль = hashedPassword
+                    // Логин не заполняем, триггер сгенерирует его автоматически
                 };
 
                 _context.Посетительs.Add(visitor);
                 await _context.SaveChangesAsync();
 
-                return (true, "Регистрация успешно завершена (через EF Core)!", visitor.Id);
+                // После сохранения получаем сгенерированный логин из БД
+                string generatedLogin = visitor.Логин ?? "не удалось получить логин";
+
+                // Эмулируем отправку сообщения пользователю о созданном логине
+                await EmulateSendLoginNotification(model.Email, generatedLogin, visitor.Id);
+
+                return (true, $"Регистрация успешно завершена! Ваш логин: {generatedLogin}", visitor.Id);
             }
             catch (Exception ex)
             {
                 return (false, $"Ошибка регистрации: {ex.Message}", 0);
             }
+        }
+
+        /// <summary>
+        /// Эмуляция отправки сообщения пользователю о созданном логине
+        /// </summary>
+        private async Task EmulateSendLoginNotification(string email, string login, int visitorId)
+        {
+            string message = $@"
+            ═══════════════════════════════════════════════════════════════
+            📧 КОМУ: {email}
+            📋 ТЕМА: Регистрация в системе ХранительПРО
+
+            Уважаемый пользователь!
+
+            Вы успешно зарегистрированы в системе контроля пропускного режима
+            'ХранительПРО'.
+        
+            🔑 ВАШИ ДАННЫЕ ДЛЯ ВХОДА:
+               • Логин: { login}
+               • ID: { visitorId}
+               • Email: { email}
+
+            📅 Дата регистрации: { DateTime.Now:dd.MM.yyyy HH:mm: ss}
+
+                        С уважением,
+                        Команда ХранительПРО
+        ═══════════════════════════════════════════════════════════════";
+        
+            // Запись в файл лога
+            string logPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "registration_log.txt");
+            await File.AppendAllTextAsync(logPath, $"{DateTime.Now:yyyy-MM-dd HH:mm:ss}\n{message}\n");
+
+            // Вывод в отладку (окно Output в Visual Studio)
+            System.Diagnostics.Debug.WriteLine(message);
+
+            // Показываем пользователю сообщение с логином
+            MessageBox.Show($"Регистрация успешно завершена!\n\nВаш логин для входа: {login}\n\nИнформация отправлена на почту {email}",
+                "Регистрация", MessageBoxButton.OK, MessageBoxImage.Information);
         }
     }
 }

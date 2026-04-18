@@ -21,7 +21,8 @@ namespace форма_сотрудника.ViewModels
 
         private void OpenDepartmentRequests()
         {
-            var requestsWindow = new RequestsListWindow(isMyRequests: false);
+            // Убираем параметр isMyRequests
+            var requestsWindow = new RequestsListWindow();
             requestsWindow.Show();
             Application.Current.Windows[0]?.Close();
         }

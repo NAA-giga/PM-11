@@ -20,7 +20,7 @@ namespace форма_сотрудника.Views
     /// </summary>
     public partial class RequestsListWindow : Window
     {
-        public RequestsListWindow(bool isMyRequests)
+        public RequestsListWindow()
         {
             InitializeComponent();
 
@@ -32,7 +32,7 @@ namespace форма_сотрудника.Views
                 return;
             }
 
-            DataContext = new RequestsListViewModel(requestService, isMyRequests);
+            DataContext = new RequestsListViewModel(requestService);
         }
     }
 }

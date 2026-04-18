@@ -7,6 +7,7 @@ namespace форма_сотрудника.Services
 {
     public interface IAuthService
     {
-        Task<(bool Success, string Message, Employee? Employee)> Login(string login, string password);
+        Task<(bool Success, string Message, Employee? Employee)> Login(string email, string password);
+        Task<(bool Success, string Message, Employee? Employee)> LoginByCode(string login, string password);
     }
 }

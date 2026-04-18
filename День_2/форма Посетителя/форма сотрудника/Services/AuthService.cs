@@ -10,33 +10,75 @@ namespace форма_сотрудника.Services
 {
     public class AuthService : IAuthService
     {
-        private readonly ApplicationDbContext _context;
+        private readonly string _connectionString;
 
         public AuthService(ApplicationDbContext context)
         {
-            _context = context;
+            _connectionString = context.Database.GetConnectionString();
         }
 
-        public async Task<(bool Success, string Message, Employee? Employee)> Login(string login, string password)
+        private ApplicationDbContext CreateContext()
         {
-            try
+            var optionsBuilder = new DbContextOptionsBuilder<ApplicationDbContext>();
+            optionsBuilder.UseNpgsql(_connectionString);
+            return new ApplicationDbContext(optionsBuilder.Options);
+        }
+
+        /// <summary>
+        /// Вход по email и паролю (для посетителей)
+        /// </summary>
+        public async Task<(bool Success, string Message, Employee? Employee)> Login(string email, string password)
+        {
+            using (var context = CreateContext())
             {
-                string hashedPassword = PasswordHasher.HashPasswordMD5(password);
-
-                var employee = await _context.Employees
-                    .Include(e => e.Department)
-                    .FirstOrDefaultAsync(e => e.Login == login && e.Password == hashedPassword);
-
-                if (employee != null)
+                try
                 {
-                    return (true, "Вход выполнен успешно!", employee);
-                }
+                    string hashedPassword = PasswordHasher.HashPasswordMD5(password);
 
-                return (false, "Неверный логин или пароль!", null);
+                    var employee = await context.Employees
+                        .Include(e => e.Department)
+                        .FirstOrDefaultAsync(e => e.Email == email && e.Password == hashedPassword);
+
+                    if (employee != null)
+                    {
+                        return (true, "Вход выполнен успешно!", employee);
+                    }
+
+                    return (false, "Неверный email или пароль!", null);
+                }
+                catch (System.Exception ex)
+                {
+                    return (false, $"Ошибка авторизации: {ex.Message}", null);
+                }
             }
-            catch (System.Exception ex)
+        }
+
+        /// <summary>
+        /// Вход по коду сотрудника (логину) и паролю
+        /// </summary>
+        public async Task<(bool Success, string Message, Employee? Employee)> LoginByCode(string login, string password)
+        {
+            using (var context = CreateContext())
             {
-                return (false, $"Ошибка авторизации: {ex.Message}", null);
+                try
+                {
+                    string hashedPassword = PasswordHasher.HashPasswordMD5(password);
+
+                    var employee = await context.Employees
+                        .Include(e => e.Department)
+                        .FirstOrDefaultAsync(e => e.Login == login && e.Password == hashedPassword);
+
+                    if (employee != null)
+                    {
+                        return (true, "Вход выполнен успешно!", employee);
+                    }
+
+                    return (false, "Неверный код сотрудника или пароль!", null);
+                }
+                catch (System.Exception ex)
+                {
+                    return (false, $"Ошибка авторизации: {ex.Message}", null);
+                }
             }
         }
     }

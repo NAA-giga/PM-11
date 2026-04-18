@@ -1,7 +1,13 @@
-﻿using System;
+﻿using CommunityToolkit.Mvvm.Input;
+using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using System.Text;
 using System.Windows.Input;
+using форма_Посетителя.Services;
+using форма_Посетителя.Helpers;
+using форма_Посетителя.Models;
+using форма_Посетителя.ViewModels;
 
 namespace форма_Посетителя.Helpers
 {
@@ -16,10 +22,11 @@ namespace форма_Посетителя.Helpers
             _canExecute = canExecute;
         }
 
-        public event EventHandler? CanExecuteChanged
+        public event EventHandler? CanExecuteChanged;
+
+        public void RaiseCanExecuteChanged()
         {
-            add { CommandManager.RequerySuggested += value; }
-            remove { CommandManager.RequerySuggested -= value; }
+            CanExecuteChanged?.Invoke(this, EventArgs.Empty);
         }
 
         public bool CanExecute(object? parameter)

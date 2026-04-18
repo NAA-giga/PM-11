@@ -19,6 +19,7 @@ namespace форма_сотрудника.Data
         public DbSet<Посетитель> Visitors { get; set; }
         public DbSet<Department> Departments { get; set; }
         public DbSet<Заявка> Requests { get; set; }
+        public DbSet<BlackList> BlackLists { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -82,6 +83,12 @@ namespace форма_сотрудника.Data
             modelBuilder.Entity<Заявка>().Property(r => r.EmployeeId).HasColumnName("Сотрудник_id");
             modelBuilder.Entity<Заявка>().Property(r => r.DepartmentId).HasColumnName("Подразделение_id");
             modelBuilder.Entity<Заявка>().Property(r => r.RejectionReason).HasColumnName("Причина_отказа");
+
+            modelBuilder.Entity<BlackList>().ToTable("Черный_список");
+            modelBuilder.Entity<BlackList>().Property(b => b.Id).HasColumnName("id");
+            modelBuilder.Entity<BlackList>().Property(b => b.VisitorId).HasColumnName("Посетитель_id");
+            modelBuilder.Entity<BlackList>().Property(b => b.Reason).HasColumnName("Причина");
+            modelBuilder.Entity<BlackList>().Property(b => b.AddedDate).HasColumnName("Дата_добавления");
         }
     }
 }

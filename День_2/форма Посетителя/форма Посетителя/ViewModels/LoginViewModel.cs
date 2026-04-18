@@ -4,6 +4,7 @@ using System.Collections.ObjectModel;
 using System.Text;
 using System.Windows;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 using System.Windows.Input;
 using форма_Посетителя.Models;
 using форма_Посетителя.Services;
@@ -16,18 +17,26 @@ namespace форма_Посетителя.ViewModels
     {
         private readonly IAuthService _authService;
 
-        private string _loginText = string.Empty;
-        public string LoginText
+        private string _email = string.Empty;
+        public string Email
         {
-            get => _loginText;
-            set => SetProperty(ref _loginText, value);
+            get => _email;
+            set
+            {
+                SetProperty(ref _email, value);
+                (LoginCommand as RelayCommand)?.RaiseCanExecuteChanged();
+            }
         }
 
         private string _password = string.Empty;
         public string Password
         {
             get => _password;
-            set => SetProperty(ref _password, value);
+            set
+            {
+                SetProperty(ref _password, value);
+                (LoginCommand as RelayCommand)?.RaiseCanExecuteChanged();
+            }
         }
 
         private string _statusMessage = string.Empty;
@@ -41,7 +50,11 @@ namespace форма_Посетителя.ViewModels
         public bool IsLoading
         {
             get => _isLoading;
-            set => SetProperty(ref _isLoading, value);
+            set
+            {
+                SetProperty(ref _isLoading, value);
+                (LoginCommand as RelayCommand)?.RaiseCanExecuteChanged();
+            }
         }
 
         public ICommand LoginCommand { get; }
@@ -50,14 +63,15 @@ namespace форма_Посетителя.ViewModels
         public LoginViewModel(IAuthService authService)
         {
             _authService = authService;
-
             LoginCommand = new RelayCommand(async _ => await Login(), _ => CanLogin());
             GoToRegisterCommand = new RelayCommand(_ => GoToRegister());
         }
 
         private bool CanLogin()
         {
-            return !IsLoading && !string.IsNullOrWhiteSpace(LoginText) && !string.IsNullOrWhiteSpace(Password);
+            return !IsLoading &&
+                   !string.IsNullOrWhiteSpace(Email) &&
+                   !string.IsNullOrWhiteSpace(Password);
         }
 
         private async Task Login()
@@ -67,32 +81,25 @@ namespace форма_Посетителя.ViewModels
 
             try
             {
-                var result = await _authService.LoginWithEF(LoginText, Password);
+                var result = await _authService.LoginWithEF(Email, Password);
 
                 if (result.Success && result.Visitor != null)
                 {
-                    StatusMessage = result.Message;
-
+                    StatusMessage = "Вход выполнен успешно!";
                     App.CurrentUser = result.Visitor;
-
-                    MessageBox.Show($"Добро пожаловать, {result.Visitor.Имя} {result.Visitor.Фамилия}!",
-                        "Успешный вход", MessageBoxButton.OK, MessageBoxImage.Information);
 
                     var mainWindow = new MainWindow();
                     mainWindow.Show();
-
                     Application.Current.Windows[0]?.Close();
                 }
                 else
                 {
-                    StatusMessage = result.Message;
-                    MessageBox.Show(result.Message, "Ошибка входа", MessageBoxButton.OK, MessageBoxImage.Error);
+                    StatusMessage = "Неверный email или пароль!";
                 }
             }
             catch (System.Exception ex)
             {
                 StatusMessage = $"Ошибка: {ex.Message}";
-                MessageBox.Show($"Произошла ошибка: {ex.Message}", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
             }
             finally
             {

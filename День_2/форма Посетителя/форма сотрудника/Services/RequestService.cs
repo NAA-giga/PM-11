@@ -10,94 +10,149 @@ namespace форма_сотрудника.Services
 {
     public class RequestService : IRequestService
     {
-        private readonly ApplicationDbContext _context;
+        private readonly string _connectionString;
 
         public RequestService(ApplicationDbContext context)
         {
-            _context = context;
+            _connectionString = context.Database.GetConnectionString();
         }
 
-        public async Task<List<Заявка>> GetRequestsByDepartment(int departmentId)
+        private ApplicationDbContext CreateContext()
         {
-            var requests = await _context.Requests
-                .Include(r => r.Visitor)
-                .Include(r => r.Department)
-                .Include(r => r.Employee)
-                .Where(r => r.DepartmentId == departmentId && r.Status == "проверка")
-                .OrderByDescending(r => r.CreationDate)
-                .ToListAsync();
-
-            return requests;
+            var optionsBuilder = new DbContextOptionsBuilder<ApplicationDbContext>();
+            optionsBuilder.UseNpgsql(_connectionString);
+            return new ApplicationDbContext(optionsBuilder.Options);
         }
 
-        public async Task<List<Заявка>> GetRequestsByEmployee(int employeeId)
+        public async Task<List<Заявка>> GetAllPendingRequests()
         {
-            var requests = await _context.Requests
-                .Include(r => r.Visitor)
-                .Include(r => r.Department)
-                .Include(r => r.Employee)
-                .Where(r => r.EmployeeId == employeeId)
-                .OrderByDescending(r => r.CreationDate)
-                .ToListAsync();
+            using (var context = CreateContext())
+            {
+                var requests = await context.Requests
+                    .Include(r => r.Visitor)
+                    .Include(r => r.Department)
+                    .Include(r => r.Employee)
+                    .Where(r => r.Status == "проверка")
+                    .OrderByDescending(r => r.CreationDate)
+                    .ToListAsync();
 
-            return requests;
+                return requests;
+            }
         }
 
         public async Task<Заявка> GetRequestDetails(int requestId)
         {
-            var request = await _context.Requests
-                .Include(r => r.Visitor)
-                .Include(r => r.Department)
-                .Include(r => r.Employee)
-                .FirstOrDefaultAsync(r => r.Id == requestId);
+            using (var context = CreateContext())
+            {
+                var request = await context.Requests
+                    .Include(r => r.Visitor)
+                    .Include(r => r.Department)
+                    .Include(r => r.Employee)
+                    .FirstOrDefaultAsync(r => r.Id == requestId);
 
-            return request;
+                return request;
+            }
         }
 
         public async Task<(bool Success, string Message)> ApproveRequest(int requestId, int employeeId)
         {
-            try
+            using (var context = CreateContext())
             {
-                var request = await _context.Requests.FindAsync(requestId);
-                if (request == null)
+                try
                 {
-                    return (false, "Заявка не найдена");
+                    var request = await context.Requests.FindAsync(requestId);
+                    if (request == null)
+                    {
+                        return (false, "Заявка не найдена");
+                    }
+
+                    request.Status = "одобрена";
+                    request.ApprovalDate = DateTime.Now;
+                    request.EmployeeId = employeeId;
+
+                    await context.SaveChangesAsync();
+                    return (true, "Заявка одобрена");
                 }
-
-                request.Status = "одобрена";
-                request.ApprovalDate = DateTime.Now;
-                request.EmployeeId = employeeId;
-
-                await _context.SaveChangesAsync();
-                return (true, "Заявка одобрена");
-            }
-            catch (Exception ex)
-            {
-                return (false, $"Ошибка: {ex.Message}");
+                catch (Exception ex)
+                {
+                    return (false, $"Ошибка: {ex.Message}");
+                }
             }
         }
 
         public async Task<(bool Success, string Message)> RejectRequest(int requestId, int employeeId, string reason)
         {
-            try
+            using (var context = CreateContext())
             {
-                var request = await _context.Requests.FindAsync(requestId);
-                if (request == null)
+                try
                 {
-                    return (false, "Заявка не найдена");
+                    var request = await context.Requests.FindAsync(requestId);
+                    if (request == null)
+                    {
+                        return (false, "Заявка не найдена");
+                    }
+
+                    request.Status = "не одобрена";
+                    request.ApprovalDate = DateTime.Now;
+                    request.EmployeeId = employeeId;
+                    request.RejectionReason = reason;
+
+                    await context.SaveChangesAsync();
+                    return (true, "Заявка отклонена");
                 }
-
-                request.Status = "не одобрена";
-                request.ApprovalDate = DateTime.Now;
-                request.EmployeeId = employeeId;
-                request.RejectionReason = reason;
-
-                await _context.SaveChangesAsync();
-                return (true, "Заявка отклонена");
+                catch (Exception ex)
+                {
+                    return (false, $"Ошибка: {ex.Message}");
+                }
             }
-            catch (Exception ex)
+        }
+
+        public async Task<List<DepartmentItem>> GetDepartments()
+        {
+            using (var context = CreateContext())
             {
-                return (false, $"Ошибка: {ex.Message}");
+                var departments = await context.Departments
+                    .Select(d => new DepartmentItem
+                    {
+                        Id = d.Id,
+                        Name = d.Name
+                    })
+                    .ToListAsync();
+
+                return departments;
+            }
+        }
+
+        // Остальные методы, если нужны
+        public async Task<List<Заявка>> GetRequestsByDepartment(int departmentId)
+        {
+            using (var context = CreateContext())
+            {
+                var requests = await context.Requests
+                    .Include(r => r.Visitor)
+                    .Include(r => r.Department)
+                    .Include(r => r.Employee)
+                    .Where(r => r.DepartmentId == departmentId && r.Status == "проверка")
+                    .OrderByDescending(r => r.CreationDate)
+                    .ToListAsync();
+
+                return requests;
+            }
+        }
+
+        public async Task<List<Заявка>> GetRequestsByEmployee(int employeeId)
+        {
+            using (var context = CreateContext())
+            {
+                var requests = await context.Requests
+                    .Include(r => r.Visitor)
+                    .Include(r => r.Department)
+                    .Include(r => r.Employee)
+                    .Where(r => r.EmployeeId == employeeId)
+                    .OrderByDescending(r => r.CreationDate)
+                    .ToListAsync();
+
+                return requests;
             }
         }
     }
