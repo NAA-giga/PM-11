@@ -272,14 +272,7 @@ namespace форма_Посетителя.ViewModels
 
         private bool CanSubmitRequest()
         {
-            return !IsLoading && RequestModel != null &&
-                   RequestModel.StartDate >= DateTime.Now.AddDays(1) &&
-                   RequestModel.EndDate >= RequestModel.StartDate &&
-                   RequestModel.EndDate <= RequestModel.StartDate.AddDays(15) &&
-                   !string.IsNullOrWhiteSpace(RequestModel.Purpose) &&
-                   RequestModel.DepartmentId.HasValue &&
-                   RequestModel.EmployeeId.HasValue &&
-                   Visitors.Count >= 5;  // Группа не менее 5 человек
+            return true;
         }
 
         private async Task SubmitRequest()

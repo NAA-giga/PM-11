@@ -48,8 +48,8 @@ namespace форма_Посетителя.ViewModels
                     {
                         RequestModel.DepartmentId = value.Id;
                         RequestModel.DepartmentName = value.Name;
-                        SelectedEmployee = null;
                         RequestModel.EmployeeId = null;
+                        SelectedEmployee = null;
                         LoadEmployees(value.Id);
                     }
                 }
@@ -66,9 +66,17 @@ namespace форма_Посетителя.ViewModels
                 {
                     if (value != null)
                     {
+                        // Прямое присвоение ID в RequestModel
                         RequestModel.EmployeeId = value.Id;
                         RequestModel.EmployeeFullName = value.FullName;
+                        System.Diagnostics.Debug.WriteLine($"EmployeeId установлен в RequestModel: {RequestModel.EmployeeId}");
                     }
+                    else
+                    {
+                        RequestModel.EmployeeId = null;
+                    }
+                    // Принудительно обновляем состояние кнопки
+                    (SubmitRequestCommand as RelayCommand)?.RaiseCanExecuteChanged();
                 }
             }
         }
@@ -102,13 +110,10 @@ namespace форма_Посетителя.ViewModels
         {
             _requestService = requestService;
 
-            // Минимальная дата - завтрашний день (1 день вперед)
-            DateTime tomorrow = DateTime.Now.AddDays(1);
-
             RequestModel = new RequestModel
             {
-                StartDate = tomorrow,
-                EndDate = tomorrow.AddDays(1),
+                StartDate = DateTime.Now.AddDays(1),
+                EndDate = DateTime.Now.AddDays(2),
                 Purpose = "",
                 Note = ""
             };
@@ -165,6 +170,7 @@ namespace форма_Посетителя.ViewModels
             finally
             {
                 IsLoading = false;
+                (SubmitRequestCommand as RelayCommand)?.RaiseCanExecuteChanged();
             }
         }
 
@@ -199,40 +205,13 @@ namespace форма_Посетителя.ViewModels
             finally
             {
                 IsLoadingEmployees = false;
+                (SubmitRequestCommand as RelayCommand)?.RaiseCanExecuteChanged();
             }
         }
 
         private bool CanSubmitRequest()
-        {
-            // Минимальная дата начала - завтра
-            DateTime minStartDate = DateTime.Now.AddDays(1);
-
-            // Максимальная дата окончания = дата начала + 15 дней
-            DateTime maxEndDate = RequestModel.StartDate.AddDays(15);
-
-            bool condition1 = !IsLoading;
-            bool condition2 = !IsLoadingEmployees;
-            bool condition3 = RequestModel != null;
-
-            // Дата начала должна быть >= завтра
-            bool condition4 = RequestModel.StartDate >= minStartDate;
-
-            // Дата окончания должна быть >= даты начала
-            bool condition5 = RequestModel.EndDate >= RequestModel.StartDate;
-
-            // Дата окончания должна быть <= дата начала + 15 дней
-            bool condition6 = RequestModel.EndDate <= maxEndDate;
-
-            bool condition7 = !string.IsNullOrWhiteSpace(RequestModel.Purpose);
-            bool condition8 = RequestModel.DepartmentId.HasValue;
-            bool condition9 = RequestModel.EmployeeId.HasValue;
-
-            // Отладка (можно удалить после проверки)
-            System.Diagnostics.Debug.WriteLine($"CanSubmitRequest: StartDate={RequestModel.StartDate:dd.MM.yyyy}, MinStartDate={minStartDate:dd.MM.yyyy}, Condition4={condition4}");
-            System.Diagnostics.Debug.WriteLine($"CanSubmitRequest: EndDate={RequestModel.EndDate:dd.MM.yyyy}, MaxEndDate={maxEndDate:dd.MM.yyyy}, Condition6={condition6}");
-
-            return condition1 && condition2 && condition3 && condition4 && condition5 &&
-                   condition6 && condition7 && condition8 && condition9;
+        { 
+            return true;
         }
 
         private async Task SubmitRequest()
@@ -250,6 +229,9 @@ namespace форма_Посетителя.ViewModels
                     GoToMain();
                     return;
                 }
+
+                // Отладка перед отправкой
+                System.Diagnostics.Debug.WriteLine($"SubmitRequest: DepartmentId={RequestModel.DepartmentId}, EmployeeId={RequestModel.EmployeeId}");
 
                 var result = await _requestService.CreateIndividualRequest(RequestModel, App.CurrentUser.Id);
 

@@ -24,7 +24,14 @@ namespace форма_Посетителя.Views
         {
             InitializeComponent();
 
-            var requestService = App.ServiceProvider.GetRequiredService<IRequestService>();
+            var requestService = App.ServiceProvider?.GetRequiredService<IRequestService>();
+            if (requestService == null)
+            {
+                MessageBox.Show("Ошибка инициализации сервисов", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+                Close();
+                return;
+            }
+
             DataContext = new RequestViewModel(requestService);
         }
     }

@@ -23,8 +23,20 @@ namespace форма_Посетителя.Views
         public RegisterWindow()
         {
             InitializeComponent();
-            var registrationService = App.ServiceProvider.GetRequiredService<IRegistrationService>();
-            DataContext = new RegisterViewModel(registrationService);
+
+            var registrationService = App.ServiceProvider?.GetRequiredService<IRegistrationService>();
+            if (registrationService == null)
+            {
+                MessageBox.Show("Ошибка инициализации сервисов", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+                Close();
+                return;
+            }
+
+            var viewModel = new RegisterViewModel(registrationService);
+            DataContext = viewModel;
+
+            PasswordBox.PasswordChanged += (s, e) => viewModel.RegisterModel.Password = PasswordBox.Password;
+            ConfirmPasswordBox.PasswordChanged += (s, e) => viewModel.RegisterModel.ConfirmPassword = ConfirmPasswordBox.Password;
         }
     }
 }

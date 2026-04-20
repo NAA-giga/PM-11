@@ -1,0 +1,121 @@
+C:\23П-2\ПМ-11\день 2\форма Посетителя\форма для сотрудника охраны\bin\Debug\net10.0-windows\форма для сотрудника охраны.exe
+C:\23П-2\ПМ-11\день 2\форма Посетителя\форма для сотрудника охраны\bin\Debug\net10.0-windows\форма для сотрудника охраны.dll.config
+C:\23П-2\ПМ-11\день 2\форма Посетителя\форма для сотрудника охраны\bin\Debug\net10.0-windows\форма для сотрудника охраны.deps.json
+C:\23П-2\ПМ-11\день 2\форма Посетителя\форма для сотрудника охраны\bin\Debug\net10.0-windows\форма для сотрудника охраны.runtimeconfig.json
+C:\23П-2\ПМ-11\день 2\форма Посетителя\форма для сотрудника охраны\bin\Debug\net10.0-windows\форма для сотрудника охраны.dll
+C:\23П-2\ПМ-11\день 2\форма Посетителя\форма для сотрудника охраны\bin\Debug\net10.0-windows\форма для сотрудника охраны.pdb
+C:\23П-2\ПМ-11\день 2\форма Посетителя\форма для сотрудника охраны\bin\Debug\net10.0-windows\Humanizer.dll
+C:\23П-2\ПМ-11\день 2\форма Посетителя\форма для сотрудника охраны\bin\Debug\net10.0-windows\Microsoft.Bcl.AsyncInterfaces.dll
+C:\23П-2\ПМ-11\день 2\форма Посетителя\форма для сотрудника охраны\bin\Debug\net10.0-windows\Microsoft.CodeAnalysis.dll
+C:\23П-2\ПМ-11\день 2\форма Посетителя\форма для сотрудника охраны\bin\Debug\net10.0-windows\Microsoft.CodeAnalysis.CSharp.dll
+C:\23П-2\ПМ-11\день 2\форма Посетителя\форма для сотрудника охраны\bin\Debug\net10.0-windows\Microsoft.CodeAnalysis.CSharp.Workspaces.dll
+C:\23П-2\ПМ-11\день 2\форма Посетителя\форма для сотрудника охраны\bin\Debug\net10.0-windows\Microsoft.CodeAnalysis.Workspaces.dll
+C:\23П-2\ПМ-11\день 2\форма Посетителя\форма для сотрудника охраны\bin\Debug\net10.0-windows\Microsoft.EntityFrameworkCore.dll
+C:\23П-2\ПМ-11\день 2\форма Посетителя\форма для сотрудника охраны\bin\Debug\net10.0-windows\Microsoft.EntityFrameworkCore.Abstractions.dll
+C:\23П-2\ПМ-11\день 2\форма Посетителя\форма для сотрудника охраны\bin\Debug\net10.0-windows\Microsoft.EntityFrameworkCore.Design.dll
+C:\23П-2\ПМ-11\день 2\форма Посетителя\форма для сотрудника охраны\bin\Debug\net10.0-windows\Microsoft.EntityFrameworkCore.Relational.dll
+C:\23П-2\ПМ-11\день 2\форма Посетителя\форма для сотрудника охраны\bin\Debug\net10.0-windows\Microsoft.Extensions.Caching.Abstractions.dll
+C:\23П-2\ПМ-11\день 2\форма Посетителя\форма для сотрудника охраны\bin\Debug\net10.0-windows\Microsoft.Extensions.Caching.Memory.dll
+C:\23П-2\ПМ-11\день 2\форма Посетителя\форма для сотрудника охраны\bin\Debug\net10.0-windows\Microsoft.Extensions.Configuration.dll
+C:\23П-2\ПМ-11\день 2\форма Посетителя\форма для сотрудника охраны\bin\Debug\net10.0-windows\Microsoft.Extensions.Configuration.Abstractions.dll
+C:\23П-2\ПМ-11\день 2\форма Посетителя\форма для сотрудника охраны\bin\Debug\net10.0-windows\Microsoft.Extensions.Configuration.FileExtensions.dll
+C:\23П-2\ПМ-11\день 2\форма Посетителя\форма для сотрудника охраны\bin\Debug\net10.0-windows\Microsoft.Extensions.Configuration.Json.dll
+C:\23П-2\ПМ-11\день 2\форма Посетителя\форма для сотрудника охраны\bin\Debug\net10.0-windows\Microsoft.Extensions.DependencyInjection.dll
+C:\23П-2\ПМ-11\день 2\форма Посетителя\форма для сотрудника охраны\bin\Debug\net10.0-windows\Microsoft.Extensions.DependencyInjection.Abstractions.dll
+C:\23П-2\ПМ-11\день 2\форма Посетителя\форма для сотрудника охраны\bin\Debug\net10.0-windows\Microsoft.Extensions.DependencyModel.dll
+C:\23П-2\ПМ-11\день 2\форма Посетителя\форма для сотрудника охраны\bin\Debug\net10.0-windows\Microsoft.Extensions.FileProviders.Abstractions.dll
+C:\23П-2\ПМ-11\день 2\форма Посетителя\форма для сотрудника охраны\bin\Debug\net10.0-windows\Microsoft.Extensions.FileProviders.Physical.dll
+C:\23П-2\ПМ-11\день 2\форма Посетителя\форма для сотрудника охраны\bin\Debug\net10.0-windows\Microsoft.Extensions.FileSystemGlobbing.dll
+C:\23П-2\ПМ-11\день 2\форма Посетителя\форма для сотрудника охраны\bin\Debug\net10.0-windows\Microsoft.Extensions.Logging.dll
+C:\23П-2\ПМ-11\день 2\форма Посетителя\форма для сотрудника охраны\bin\Debug\net10.0-windows\Microsoft.Extensions.Logging.Abstractions.dll
+C:\23П-2\ПМ-11\день 2\форма Посетителя\форма для сотрудника охраны\bin\Debug\net10.0-windows\Microsoft.Extensions.Options.dll
+C:\23П-2\ПМ-11\день 2\форма Посетителя\форма для сотрудника охраны\bin\Debug\net10.0-windows\Microsoft.Extensions.Primitives.dll
+C:\23П-2\ПМ-11\день 2\форма Посетителя\форма для сотрудника охраны\bin\Debug\net10.0-windows\Mono.TextTemplating.dll
+C:\23П-2\ПМ-11\день 2\форма Посетителя\форма для сотрудника охраны\bin\Debug\net10.0-windows\Npgsql.dll
+C:\23П-2\ПМ-11\день 2\форма Посетителя\форма для сотрудника охраны\bin\Debug\net10.0-windows\Npgsql.EntityFrameworkCore.PostgreSQL.dll
+C:\23П-2\ПМ-11\день 2\форма Посетителя\форма для сотрудника охраны\bin\Debug\net10.0-windows\System.Composition.AttributedModel.dll
+C:\23П-2\ПМ-11\день 2\форма Посетителя\форма для сотрудника охраны\bin\Debug\net10.0-windows\System.Composition.Convention.dll
+C:\23П-2\ПМ-11\день 2\форма Посетителя\форма для сотрудника охраны\bin\Debug\net10.0-windows\System.Composition.Hosting.dll
+C:\23П-2\ПМ-11\день 2\форма Посетителя\форма для сотрудника охраны\bin\Debug\net10.0-windows\System.Composition.Runtime.dll
+C:\23П-2\ПМ-11\день 2\форма Посетителя\форма для сотрудника охраны\bin\Debug\net10.0-windows\System.Composition.TypedParts.dll
+C:\23П-2\ПМ-11\день 2\форма Посетителя\форма для сотрудника охраны\bin\Debug\net10.0-windows\cs\Microsoft.CodeAnalysis.resources.dll
+C:\23П-2\ПМ-11\день 2\форма Посетителя\форма для сотрудника охраны\bin\Debug\net10.0-windows\de\Microsoft.CodeAnalysis.resources.dll
+C:\23П-2\ПМ-11\день 2\форма Посетителя\форма для сотрудника охраны\bin\Debug\net10.0-windows\es\Microsoft.CodeAnalysis.resources.dll
+C:\23П-2\ПМ-11\день 2\форма Посетителя\форма для сотрудника охраны\bin\Debug\net10.0-windows\fr\Microsoft.CodeAnalysis.resources.dll
+C:\23П-2\ПМ-11\день 2\форма Посетителя\форма для сотрудника охраны\bin\Debug\net10.0-windows\it\Microsoft.CodeAnalysis.resources.dll
+C:\23П-2\ПМ-11\день 2\форма Посетителя\форма для сотрудника охраны\bin\Debug\net10.0-windows\ja\Microsoft.CodeAnalysis.resources.dll
+C:\23П-2\ПМ-11\день 2\форма Посетителя\форма для сотрудника охраны\bin\Debug\net10.0-windows\ko\Microsoft.CodeAnalysis.resources.dll
+C:\23П-2\ПМ-11\день 2\форма Посетителя\форма для сотрудника охраны\bin\Debug\net10.0-windows\pl\Microsoft.CodeAnalysis.resources.dll
+C:\23П-2\ПМ-11\день 2\форма Посетителя\форма для сотрудника охраны\bin\Debug\net10.0-windows\pt-BR\Microsoft.CodeAnalysis.resources.dll
+C:\23П-2\ПМ-11\день 2\форма Посетителя\форма для сотрудника охраны\bin\Debug\net10.0-windows\ru\Microsoft.CodeAnalysis.resources.dll
+C:\23П-2\ПМ-11\день 2\форма Посетителя\форма для сотрудника охраны\bin\Debug\net10.0-windows\tr\Microsoft.CodeAnalysis.resources.dll
+C:\23П-2\ПМ-11\день 2\форма Посетителя\форма для сотрудника охраны\bin\Debug\net10.0-windows\zh-Hans\Microsoft.CodeAnalysis.resources.dll
+C:\23П-2\ПМ-11\день 2\форма Посетителя\форма для сотрудника охраны\bin\Debug\net10.0-windows\zh-Hant\Microsoft.CodeAnalysis.resources.dll
+C:\23П-2\ПМ-11\день 2\форма Посетителя\форма для сотрудника охраны\bin\Debug\net10.0-windows\cs\Microsoft.CodeAnalysis.CSharp.resources.dll
+C:\23П-2\ПМ-11\день 2\форма Посетителя\форма для сотрудника охраны\bin\Debug\net10.0-windows\de\Microsoft.CodeAnalysis.CSharp.resources.dll
+C:\23П-2\ПМ-11\день 2\форма Посетителя\форма для сотрудника охраны\bin\Debug\net10.0-windows\es\Microsoft.CodeAnalysis.CSharp.resources.dll
+C:\23П-2\ПМ-11\день 2\форма Посетителя\форма для сотрудника охраны\bin\Debug\net10.0-windows\fr\Microsoft.CodeAnalysis.CSharp.resources.dll
+C:\23П-2\ПМ-11\день 2\форма Посетителя\форма для сотрудника охраны\bin\Debug\net10.0-windows\it\Microsoft.CodeAnalysis.CSharp.resources.dll
+C:\23П-2\ПМ-11\день 2\форма Посетителя\форма для сотрудника охраны\bin\Debug\net10.0-windows\ja\Microsoft.CodeAnalysis.CSharp.resources.dll
+C:\23П-2\ПМ-11\день 2\форма Посетителя\форма для сотрудника охраны\bin\Debug\net10.0-windows\ko\Microsoft.CodeAnalysis.CSharp.resources.dll
+C:\23П-2\ПМ-11\день 2\форма Посетителя\форма для сотрудника охраны\bin\Debug\net10.0-windows\pl\Microsoft.CodeAnalysis.CSharp.resources.dll
+C:\23П-2\ПМ-11\день 2\форма Посетителя\форма для сотрудника охраны\bin\Debug\net10.0-windows\pt-BR\Microsoft.CodeAnalysis.CSharp.resources.dll
+C:\23П-2\ПМ-11\день 2\форма Посетителя\форма для сотрудника охраны\bin\Debug\net10.0-windows\ru\Microsoft.CodeAnalysis.CSharp.resources.dll
+C:\23П-2\ПМ-11\день 2\форма Посетителя\форма для сотрудника охраны\bin\Debug\net10.0-windows\tr\Microsoft.CodeAnalysis.CSharp.resources.dll
+C:\23П-2\ПМ-11\день 2\форма Посетителя\форма для сотрудника охраны\bin\Debug\net10.0-windows\zh-Hans\Microsoft.CodeAnalysis.CSharp.resources.dll
+C:\23П-2\ПМ-11\день 2\форма Посетителя\форма для сотрудника охраны\bin\Debug\net10.0-windows\zh-Hant\Microsoft.CodeAnalysis.CSharp.resources.dll
+C:\23П-2\ПМ-11\день 2\форма Посетителя\форма для сотрудника охраны\bin\Debug\net10.0-windows\cs\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+C:\23П-2\ПМ-11\день 2\форма Посетителя\форма для сотрудника охраны\bin\Debug\net10.0-windows\de\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+C:\23П-2\ПМ-11\день 2\форма Посетителя\форма для сотрудника охраны\bin\Debug\net10.0-windows\es\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+C:\23П-2\ПМ-11\день 2\форма Посетителя\форма для сотрудника охраны\bin\Debug\net10.0-windows\fr\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+C:\23П-2\ПМ-11\день 2\форма Посетителя\форма для сотрудника охраны\bin\Debug\net10.0-windows\it\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+C:\23П-2\ПМ-11\день 2\форма Посетителя\форма для сотрудника охраны\bin\Debug\net10.0-windows\ja\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+C:\23П-2\ПМ-11\день 2\форма Посетителя\форма для сотрудника охраны\bin\Debug\net10.0-windows\ko\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+C:\23П-2\ПМ-11\день 2\форма Посетителя\форма для сотрудника охраны\bin\Debug\net10.0-windows\pl\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+C:\23П-2\ПМ-11\день 2\форма Посетителя\форма для сотрудника охраны\bin\Debug\net10.0-windows\pt-BR\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+C:\23П-2\ПМ-11\день 2\форма Посетителя\форма для сотрудника охраны\bin\Debug\net10.0-windows\ru\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+C:\23П-2\ПМ-11\день 2\форма Посетителя\форма для сотрудника охраны\bin\Debug\net10.0-windows\tr\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+C:\23П-2\ПМ-11\день 2\форма Посетителя\форма для сотрудника охраны\bin\Debug\net10.0-windows\zh-Hans\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+C:\23П-2\ПМ-11\день 2\форма Посетителя\форма для сотрудника охраны\bin\Debug\net10.0-windows\zh-Hant\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+C:\23П-2\ПМ-11\день 2\форма Посетителя\форма для сотрудника охраны\bin\Debug\net10.0-windows\cs\Microsoft.CodeAnalysis.Workspaces.resources.dll
+C:\23П-2\ПМ-11\день 2\форма Посетителя\форма для сотрудника охраны\bin\Debug\net10.0-windows\de\Microsoft.CodeAnalysis.Workspaces.resources.dll
+C:\23П-2\ПМ-11\день 2\форма Посетителя\форма для сотрудника охраны\bin\Debug\net10.0-windows\es\Microsoft.CodeAnalysis.Workspaces.resources.dll
+C:\23П-2\ПМ-11\день 2\форма Посетителя\форма для сотрудника охраны\bin\Debug\net10.0-windows\fr\Microsoft.CodeAnalysis.Workspaces.resources.dll
+C:\23П-2\ПМ-11\день 2\форма Посетителя\форма для сотрудника охраны\bin\Debug\net10.0-windows\it\Microsoft.CodeAnalysis.Workspaces.resources.dll
+C:\23П-2\ПМ-11\день 2\форма Посетителя\форма для сотрудника охраны\bin\Debug\net10.0-windows\ja\Microsoft.CodeAnalysis.Workspaces.resources.dll
+C:\23П-2\ПМ-11\день 2\форма Посетителя\форма для сотрудника охраны\bin\Debug\net10.0-windows\ko\Microsoft.CodeAnalysis.Workspaces.resources.dll
+C:\23П-2\ПМ-11\день 2\форма Посетителя\форма для сотрудника охраны\bin\Debug\net10.0-windows\pl\Microsoft.CodeAnalysis.Workspaces.resources.dll
+C:\23П-2\ПМ-11\день 2\форма Посетителя\форма для сотрудника охраны\bin\Debug\net10.0-windows\pt-BR\Microsoft.CodeAnalysis.Workspaces.resources.dll
+C:\23П-2\ПМ-11\день 2\форма Посетителя\форма для сотрудника охраны\bin\Debug\net10.0-windows\ru\Microsoft.CodeAnalysis.Workspaces.resources.dll
+C:\23П-2\ПМ-11\день 2\форма Посетителя\форма для сотрудника охраны\bin\Debug\net10.0-windows\tr\Microsoft.CodeAnalysis.Workspaces.resources.dll
+C:\23П-2\ПМ-11\день 2\форма Посетителя\форма для сотрудника охраны\bin\Debug\net10.0-windows\zh-Hans\Microsoft.CodeAnalysis.Workspaces.resources.dll
+C:\23П-2\ПМ-11\день 2\форма Посетителя\форма для сотрудника охраны\bin\Debug\net10.0-windows\zh-Hant\Microsoft.CodeAnalysis.Workspaces.resources.dll
+C:\23П-2\ПМ-11\день 2\форма Посетителя\форма для сотрудника охраны\obj\Debug\net10.0-windows\форма для сотрудника охраны.csproj.AssemblyReference.cache
+C:\23П-2\ПМ-11\день 2\форма Посетителя\форма для сотрудника охраны\obj\Debug\net10.0-windows\Views\AccessControlWindow.g.cs
+C:\23П-2\ПМ-11\день 2\форма Посетителя\форма для сотрудника охраны\obj\Debug\net10.0-windows\Views\DepartureWindow.g.cs
+C:\23П-2\ПМ-11\день 2\форма Посетителя\форма для сотрудника охраны\obj\Debug\net10.0-windows\Views\LoginWindow.g.cs
+C:\23П-2\ПМ-11\день 2\форма Посетителя\форма для сотрудника охраны\obj\Debug\net10.0-windows\Views\MainWindow.g.cs
+C:\23П-2\ПМ-11\день 2\форма Посетителя\форма для сотрудника охраны\obj\Debug\net10.0-windows\Views\RequestsListWindow.g.cs
+C:\23П-2\ПМ-11\день 2\форма Посетителя\форма для сотрудника охраны\obj\Debug\net10.0-windows\App.g.cs
+C:\23П-2\ПМ-11\день 2\форма Посетителя\форма для сотрудника охраны\obj\Debug\net10.0-windows\форма для сотрудника охраны_MarkupCompile.cache
+C:\23П-2\ПМ-11\день 2\форма Посетителя\форма для сотрудника охраны\obj\Debug\net10.0-windows\форма для сотрудника охраны_MarkupCompile.lref
+C:\23П-2\ПМ-11\день 2\форма Посетителя\форма для сотрудника охраны\obj\Debug\net10.0-windows\Views\AccessControlWindow.baml
+C:\23П-2\ПМ-11\день 2\форма Посетителя\форма для сотрудника охраны\obj\Debug\net10.0-windows\Views\DepartureWindow.baml
+C:\23П-2\ПМ-11\день 2\форма Посетителя\форма для сотрудника охраны\obj\Debug\net10.0-windows\Views\LoginWindow.baml
+C:\23П-2\ПМ-11\день 2\форма Посетителя\форма для сотрудника охраны\obj\Debug\net10.0-windows\Views\MainWindow.baml
+C:\23П-2\ПМ-11\день 2\форма Посетителя\форма для сотрудника охраны\obj\Debug\net10.0-windows\Views\RequestsListWindow.baml
+C:\23П-2\ПМ-11\день 2\форма Посетителя\форма для сотрудника охраны\obj\Debug\net10.0-windows\форма для сотрудника охраны.g.resources
+C:\23П-2\ПМ-11\день 2\форма Посетителя\форма для сотрудника охраны\obj\Debug\net10.0-windows\форма для сотрудника охраны.GeneratedMSBuildEditorConfig.editorconfig
+C:\23П-2\ПМ-11\день 2\форма Посетителя\форма для сотрудника охраны\obj\Debug\net10.0-windows\форма для сотрудника охраны.AssemblyInfoInputs.cache
+C:\23П-2\ПМ-11\день 2\форма Посетителя\форма для сотрудника охраны\obj\Debug\net10.0-windows\форма для сотрудника охраны.AssemblyInfo.cs
+C:\23П-2\ПМ-11\день 2\форма Посетителя\форма для сотрудника охраны\obj\Debug\net10.0-windows\форма для сотрудника охраны.csproj.CoreCompileInputs.cache
+C:\23П-2\ПМ-11\день 2\форма Посетителя\форма для сотрудника охраны\obj\Debug\net10.0-windows\_____ __.E679CAFD.Up2Date
+C:\23П-2\ПМ-11\день 2\форма Посетителя\форма для сотрудника охраны\obj\Debug\net10.0-windows\форма для сотрудника охраны.dll
+C:\23П-2\ПМ-11\день 2\форма Посетителя\форма для сотрудника охраны\obj\Debug\net10.0-windows\refint\форма для сотрудника охраны.dll
+C:\23П-2\ПМ-11\день 2\форма Посетителя\форма для сотрудника охраны\obj\Debug\net10.0-windows\форма для сотрудника охраны.pdb
+C:\23П-2\ПМ-11\день 2\форма Посетителя\форма для сотрудника охраны\obj\Debug\net10.0-windows\форма для сотрудника охраны.genruntimeconfig.cache
+C:\23П-2\ПМ-11\день 2\форма Посетителя\форма для сотрудника охраны\obj\Debug\net10.0-windows\ref\форма для сотрудника охраны.dll
+C:\23П-2\ПМ-11\день 2\форма Посетителя\форма для сотрудника охраны\obj\Debug\net10.0-windows\GeneratedInternalTypeHelper.g.cs
+C:\23П-2\ПМ-11\день 2\форма Посетителя\форма для сотрудника охраны\obj\Debug\net10.0-windows\App.baml
+C:\23П-2\ПМ-11\день 2\форма Посетителя\форма для сотрудника охраны\obj\Debug\net10.0-windows\Views\SearchWindow.g.cs
+C:\23П-2\ПМ-11\день 2\форма Посетителя\форма для сотрудника охраны\obj\Debug\net10.0-windows\Views\SearchWindow.baml

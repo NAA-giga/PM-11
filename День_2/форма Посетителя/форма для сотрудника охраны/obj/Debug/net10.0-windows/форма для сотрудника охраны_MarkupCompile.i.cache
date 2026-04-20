@@ -1,0 +1,20 @@
+﻿форма для сотрудника охраны
+1.0.0.0
+
+winexe
+C#
+.cs
+C:\23П-2\ПМ-11\день 2\форма Посетителя\форма для сотрудника охраны\obj\Debug\net10.0-windows\
+форма_для_сотрудника_охраны
+none
+false
+TRACE;DEBUG;NET;NET10_0;NETCOREAPP;WINDOWS;WINDOWS7_0;NET5_0_OR_GREATER;NET6_0_OR_GREATER;NET7_0_OR_GREATER;NET8_0_OR_GREATER;NET9_0_OR_GREATER;NET10_0_OR_GREATER;NETCOREAPP3_0_OR_GREATER;NETCOREAPP3_1_OR_GREATER;WINDOWS7_0_OR_GREATER
+C:\23П-2\ПМ-11\день 2\форма Посетителя\форма для сотрудника охраны\App.xaml
+61415620290
+
+33-1438453064
+226-182442265
+Views\AccessControlWindow.xaml;Views\DepartureWindow.xaml;Views\LoginWindow.xaml;Views\MainWindow.xaml;Views\RequestsListWindow.xaml;Views\SearchWindow.xaml;
+
+True
+
